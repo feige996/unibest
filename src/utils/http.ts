@@ -1,6 +1,19 @@
 import { CustomRequestOptions } from '@/interceptors/request'
+import { encryptBase64, encryptWithAes, generateAesKey, decryptWithAes, decryptBase64 } from '@/utils/crypto';
+import { encrypt, decrypt } from '@/utils/jsencrypt';
 
+const encryptHeader = 'encrypt-key';
 export const http = <T>(options: CustomRequestOptions) => {
+
+  // 是否需要加密
+  const isEncrypt = options.header?.isEncrypt == 'true';
+  if (isEncrypt && (options.method === 'POST' || options.method === 'PUT')) {
+    // 生成一个 AES 密钥
+    const aesKey = generateAesKey();
+    options.header[encryptHeader] = encrypt(encryptBase64(aesKey));
+    options.data = typeof options.data === 'object' ? encryptWithAes(JSON.stringify(options.data), aesKey) : encryptWithAes(options.data, aesKey);
+  }
+
   // 1. 返回 Promise 对象
   return new Promise<IResData<T>>((resolve, reject) => {
     uni.request({
@@ -11,6 +24,22 @@ export const http = <T>(options: CustomRequestOptions) => {
       // #endif
       // 响应成功
       success(res) {
+
+        // 加密后的 AES 秘钥
+        const keyStr = res.header[encryptHeader];
+        // 加密
+        if (keyStr != null && keyStr != '') {
+          const data: any = res.data;
+          // 请求体 AES 解密
+          const base64Str = decrypt(keyStr);
+          // base64 解码 得到请求头的 AES 秘钥
+          const aesKey = decryptBase64(base64Str.toString());
+          // aesKey 解码 data
+          const decryptData = decryptWithAes(data, aesKey);
+          // 将结果 (得到的是 JSON 字符串) 转为 JSON
+          res.data = JSON.parse(decryptData);
+        }
+
         // 状态码 2xx，参考 axios 的设计
         if (res.statusCode >= 200 && res.statusCode < 300) {
           // 2.1 提取核心数据 res.data
