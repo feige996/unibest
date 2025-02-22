@@ -1,0 +1,21 @@
+[
+  {
+    "page": "pages/index/index",
+    "trackElement": [
+      {
+        "element": ".w-28",
+        "event": "logo",
+        "stop": true
+      },
+      {
+        "element": ".text-4xl",
+        "event": "title"
+      },
+      {
+        "element": ".text-2xl",
+        "event": "desc",
+        "key": ["desc"]
+      }
+    ]
+  }
+]
