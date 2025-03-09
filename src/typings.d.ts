@@ -1,5 +1,5 @@
 // 全局要用的类型放到这里
-
+import { Uni } from '@dcloudio/uni-app'
 declare global {
   type IResData<T> = {
     code: number
@@ -24,5 +24,4 @@ declare global {
     token?: string
   }
 }
-
 export {} // 防止模块污染
