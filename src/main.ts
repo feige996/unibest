@@ -6,7 +6,7 @@ import { createSSRApp } from 'vue'
 import App from './App.vue'
 import { prototypeInterceptor, requestInterceptor, routeInterceptor } from './interceptors'
 import store from './store'
-
+import { Statistic } from './statistic'
 export function createApp() {
   const app = createSSRApp(App)
   app.use(store)
@@ -14,7 +14,7 @@ export function createApp() {
   app.use(requestInterceptor)
   app.use(prototypeInterceptor)
   app.use(VueQueryPlugin)
-
+  app.use(Statistic)
   return {
     app,
   }
