@@ -16,7 +16,9 @@
       <image src="/static/logo.svg" alt="" class="w-28 h-28 block mx-auto" />
     </view>
     <view class="text-center text-4xl main-title-color mt-4">unibest</view>
-    <view class="text-center text-2xl mt-2 mb-8">最好用的 uniapp 开发模板</view>
+    <view class="text-center text-2xl mt-2 mb-8" data-desc="最好用的 uniapp 开发模板">
+      最好用的 uniapp 开发模板
+    </view>
 
     <view class="text-justify max-w-100 m-auto text-4 indent mb-2">{{ description }}</view>
     <view class="text-center mt-8">
