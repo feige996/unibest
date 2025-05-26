@@ -1,8 +1,10 @@
 <template>
   <wd-config-provider :themeVars="themeVars">
-    <slot />
-    <wd-toast />
-    <wd-message-box />
+    <view @click.capture="elementTracker($event)">
+      <slot />
+      <wd-toast />
+      <wd-message-box />
+    </view>
   </wd-config-provider>
 </template>
 
