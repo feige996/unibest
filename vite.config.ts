@@ -146,7 +146,7 @@ export default defineConfig(({ command, mode }) => {
       ),
       syncManifestPlugin(),
       // 自动打开开发者工具插件 (必须修改 .env 文件中的 VITE_WX_APPID)
-      openDevTools(),
+      openDevTools({ mode }),
     ],
     define: {
       __VITE_APP_PROXY__: JSON.stringify(VITE_APP_PROXY_ENABLE),
