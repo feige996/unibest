@@ -10,7 +10,13 @@
   "scss.validate": false, // 禁用 SCSS 内置验证
   "less.validate": false, // 禁用 LESS 内置验证
 
+  // 新版本 VsCode 中这个配置已失效
   "typescript.tsdk": "node_modules/typescript/lib",
+
+  // 配置新版本 VsCode 工作区的 TypeScript 的版本
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
+
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
