@@ -181,6 +181,7 @@
     "unocss": "66.0.0",
     "unplugin-auto-import": "^20.0.0",
     "vite": "5.2.8",
+    "vite-plugin-define-types-dts": "^1.0.2",
     "vite-plugin-restart": "^1.0.0",
     "vite-plugin-vue-devtools": "^8.0.5",
     "vue-tsc": "^3.0.6"

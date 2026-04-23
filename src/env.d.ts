@@ -31,5 +31,3 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv
 }
-
-declare const __VITE_APP_PROXY__: 'true' | 'false'
