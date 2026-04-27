@@ -161,7 +161,7 @@ export default defineConfig(({ command, mode }) => {
       // outputPath: 声明文件的输出路径
       // apply: 插件生效阶段 可选serve或build (默认值：serve 开发环境)
       defineTypesPlugin({
-        outputPath: 'src/types/define-types.d.ts',
+        outputPath: 'src/types/auto-vite-define-types.d.ts',
       }),
     ],
     define: {
