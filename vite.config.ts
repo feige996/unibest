@@ -160,6 +160,7 @@ export default defineConfig(({ command, mode }) => {
       // 自动生成vite的define配置的类型声明文件
       // outputPath: 声明文件的输出路径
       // apply: 插件生效阶段 可选serve或build (默认值：serve 开发环境)
+      // 具体参考：https://npmx.dev/package/vite-plugin-define-types-dts#user-content-api
       defineTypesPlugin({
         outputPath: 'src/types/auto-vite-define-types.d.ts',
       }),
