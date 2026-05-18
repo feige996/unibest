@@ -35,7 +35,21 @@ export function isPageTabbar(path: string) {
     return false
   }
   const _path = path.split('?')[0]
-  return tabbarList.value.some(item => item.pagePath === _path)
+  return _path === '/' || tabbarList.value.some(item => item.pagePath === _path)
+}
+
+function normalizeRoutePath(path?: string) {
+  if (!path) {
+    return ''
+  }
+  const _path = path.split('?')[0]
+  return _path.startsWith('/') ? _path : `/${_path}`
+}
+
+function getCurrentPagePath() {
+  const pages = getCurrentPages()
+  const currentPage = pages[pages.length - 1]
+  return normalizeRoutePath(currentPage?.route)
 }
 
 /**
@@ -62,15 +76,16 @@ const tabbarStore = reactive({
       this.setCurIdx(0)
       return
     }
+    const normalizedPath = normalizeRoutePath(path)
     // '/' 当做首页
-    if (path === '/') {
+    if (normalizedPath === '/') {
       this.setCurIdx(0)
       return
     }
-    const index = list.findIndex(item => item.pagePath === path)
+    const index = list.findIndex(item => item.pagePath === normalizedPath)
     // console.log('tabbarList:', tabbarList)
     if (index === -1) {
-      const pagesPathList = getCurrentPages().map(item => item.route.startsWith('/') ? item.route : `/${item.route}`)
+      const pagesPathList = getCurrentPages().map(item => normalizeRoutePath(item.route))
       // console.log(pagesPathList)
       const flag = list.some(item => pagesPathList.includes(item.pagePath))
       if (!flag) {
@@ -80,6 +95,12 @@ const tabbarStore = reactive({
     }
     else {
       this.setCurIdx(index)
+    }
+  },
+  syncCurIdxByCurrentPage() {
+    const currentPath = getCurrentPagePath()
+    if (currentPath) {
+      this.setAutoCurIdx(currentPath)
     }
   },
   restorePrevIdx() {
