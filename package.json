@@ -127,6 +127,7 @@
     "dayjs": "1.11.10",
     "pinia": "2.0.36",
     "pinia-plugin-persistedstate": "3.2.1",
+    "vite-plugin-define-types-dts": "^1.0.3",
     "vue": "^3.4.21",
     "vue-i18n": "9.1.9",
     "vue-router": "4.5.1",
