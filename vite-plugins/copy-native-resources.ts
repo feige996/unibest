@@ -153,11 +153,8 @@ export function copyNativeResources(options: CopyNativeResourcesOptions = {}): P
           preserveTimestamps: true, // 保持文件的时间戳
         })
 
-        if (verbose) {
-          console.log(`${logPrefix} ✅ UniApp 本地原生插件复制完成`)
-          console.log(`${logPrefix} 已成功复制 ${sourceFiles.length} 个文件/目录到构建目录`)
-          console.log(`${logPrefix} 原生插件现在可以在 App 中正常使用`)
-        }
+        console.log(`${logPrefix} ✅ UniApp 本地原生插件复制完成: ${sourcePath} -> ${targetPath}`)
+        console.log(`${logPrefix} 已成功复制 ${sourceFiles.length} 个文件/目录到构建目录`)
       }
       catch (error) {
         console.error(`${config.logPrefix} ❌ 复制 UniApp 本地原生插件失败:`, error)

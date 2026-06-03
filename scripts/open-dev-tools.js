@@ -6,8 +6,11 @@ import process from 'node:process'
 /**
  * 打开开发者工具
  * @param {string} env - 环境，'dev' 或 'build'
+ * @param {object} options - 配置选项
+ * @param {string} options.wechatDevtoolsCliPath - 微信开发者工具 CLI 路径
  */
-function _openDevTools(env = 'dev') {
+function _openDevTools(env = 'dev', options = {}) {
+  const { wechatDevtoolsCliPath } = options
   const platform = process.platform // darwin, win32, linux
   const { UNI_PLATFORM } = process.env //  mp-weixin, mp-alipay, mp-lark
 
@@ -31,7 +34,8 @@ function _openDevTools(env = 'dev') {
   if (platform === 'darwin') {
     // macOS
     if (UNI_PLATFORM === 'mp-weixin') {
-      command = `/Applications/wechatwebdevtools.app/Contents/MacOS/cli -o "${projectPath}"`
+      const cliPath = wechatDevtoolsCliPath || '/Applications/wechatwebdevtools.app/Contents/MacOS/cli'
+      command = `"${cliPath}" -o "${projectPath}"`
     }
     else if (UNI_PLATFORM === 'mp-alipay') {
       command = `/Applications/小程序开发者工具.app/Contents/MacOS/小程序开发者工具 --p "${projectPath}"`
@@ -43,7 +47,8 @@ function _openDevTools(env = 'dev') {
   else if (platform === 'win32' || platform === 'win64') {
     // Windows
     if (UNI_PLATFORM === 'mp-weixin') {
-      command = `"C:\\Program Files (x86)\\Tencent\\微信web开发者工具\\cli.bat" -o "${projectPath}"`
+      const cliPath = wechatDevtoolsCliPath || 'C:\\Program Files (x86)\\Tencent\\微信web开发者工具\\cli.bat'
+      command = `"${cliPath}" -o "${projectPath}"`
     }
   }
   else {
@@ -55,6 +60,10 @@ function _openDevTools(env = 'dev') {
   exec(command, (error, stdout, stderr) => {
     if (error) {
       console.log(`❌ 打开${uniPlatformText}开发者工具失败:`, error.message)
+      if (UNI_PLATFORM === 'mp-weixin') {
+        console.log('💡 当前使用的微信开发者工具 CLI 命令:', command)
+        console.log('💡 如果安装位置不同，可以在 env/.env 配置 WECHAT_DEVTOOLS_CLI_PATH 为本机实际 CLI 路径')
+      }
       console.log(`💡 请确保${uniPlatformText}开发者工具服务端口已启用`)
       console.log(`💡 可以手动打开${uniPlatformText}开发者工具并导入项目:`, projectPath)
       return
@@ -76,9 +85,10 @@ function _openDevTools(env = 'dev') {
  * 创建 Vite 插件，用于自动打开开发者工具
  * @param {object} options - 配置选项
  * @param {string} options.mode - 构建模式，'development' 或 'production'
+ * @param {string} options.wechatDevtoolsCliPath - 微信开发者工具 CLI 路径
  */
 export default function openDevTools(options = {}) {
-  const { mode = 'development' } = options
+  const { mode = 'development', wechatDevtoolsCliPath } = options
   // 根据 mode 确定环境：development -> dev, production -> build
   const env = mode === 'production' ? 'build' : 'dev'
 
@@ -90,7 +100,7 @@ export default function openDevTools(options = {}) {
     writeBundle() {
       if (isFirstBuild && process.env.UNI_PLATFORM?.includes('mp')) {
         isFirstBuild = false
-        _openDevTools(env)
+        _openDevTools(env, { wechatDevtoolsCliPath })
       }
     },
   }

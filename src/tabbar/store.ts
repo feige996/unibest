@@ -34,8 +34,30 @@ export function isPageTabbar(path: string) {
   if (selectedTabbarStrategy === TABBAR_STRATEGY_MAP.NO_TABBAR) {
     return false
   }
+  const _path = normalizeRoutePath(path)
+  return _path === '/' || tabbarList.value.some(item => item.pagePath === _path)
+}
+
+export function normalizeRoutePath(path?: string) {
+  if (!path) {
+    return ''
+  }
   const _path = path.split('?')[0]
-  return tabbarList.value.some(item => item.pagePath === _path)
+  return _path.startsWith('/') ? _path : `/${_path}`
+}
+
+function getCurrentPagePath() {
+  const pages = getCurrentPages()
+  const currentPage = pages[pages.length - 1]
+  return normalizeRoutePath(currentPage?.route)
+}
+
+function findTabbarIndexByPath(path?: string) {
+  const normalizedPath = normalizeRoutePath(path)
+  if (normalizedPath === '/') {
+    return 0
+  }
+  return tabbarList.value.findIndex(item => item.pagePath === normalizedPath)
 }
 
 /**
@@ -62,25 +84,34 @@ const tabbarStore = reactive({
       this.setCurIdx(0)
       return
     }
-    // '/' 当做首页
-    if (path === '/') {
-      this.setCurIdx(0)
+
+    const index = findTabbarIndexByPath(path)
+    if (index >= 0) {
+      this.setCurIdx(index)
       return
     }
-    const index = list.findIndex(item => item.pagePath === path)
-    // console.log('tabbarList:', tabbarList)
-    if (index === -1) {
-      const pagesPathList = getCurrentPages().map(item => item.route.startsWith('/') ? item.route : `/${item.route}`)
-      // console.log(pagesPathList)
-      const flag = list.some(item => pagesPathList.includes(item.pagePath))
-      if (!flag) {
-        this.setCurIdx(0)
-        return
-      }
+
+    if (this.curIdx < 0 || this.curIdx >= list.length) {
+      this.setCurIdx(0)
     }
-    else {
-      this.setCurIdx(index)
+  },
+  syncCurIdxByCurrentPage() {
+    const currentPath = getCurrentPagePath()
+    if (currentPath) {
+      this.setAutoCurIdx(currentPath)
     }
+  },
+  syncCurIdxByCurrentPageAsync() {
+    setTimeout(() => {
+      this.syncCurIdxByCurrentPage()
+    }, 0)
+  },
+  isCurrentRouteTabbarItem(index: number) {
+    const item = tabbarList.value[index]
+    if (!item) {
+      return false
+    }
+    return findTabbarIndexByPath(getCurrentPagePath()) === index
   },
   restorePrevIdx() {
     if (this.prevIdx === this.curIdx)

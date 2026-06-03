@@ -145,4 +145,4 @@ const _tabbar: TabBar = {
   list: _tabbarList as unknown as TabBar['list'],
 }
 
-export const tabBar = tabbarCacheEnable ? _tabbar : undefined
+export const tabBar = tabbarCacheEnable ? _tabbar : {}
