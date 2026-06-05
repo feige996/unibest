@@ -119,6 +119,8 @@ export default defineConfig(({ command, mode }) => {
         desc: ({ platform, version }) => `${platform} v${version} 自动构建;调用接口：${VITE_SERVER_BASEURL}`,
         // 微信小程序如果要使用 --upload, --preview 功能，请完成下面的配置
         // 'mp-weixin': {
+        //   // window 用户，如果微信开发者工具没有按默认路径安装，可能需要自定义安装路径
+        //   devToolsInstallPath: "C:\\Program Files (x86)\\Tencent\\微信web开发者工具",
         //   appid: env.VITE_WX_APPID,
         //   // 密钥在微信小程序管理后台-开发管理-小程序代码上传-上传密钥获取
         //   privateKeyPath: './private.wx***************.key',
