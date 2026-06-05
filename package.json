@@ -170,7 +170,7 @@
     "jsdom": "^29.1.1",
     "lint-staged": "^15.2.10",
     "miniprogram-api-typings": "^4.1.0",
-    "miniprogram-ci": "^2.1.26",
+    "miniprogram-ci": "^2.1.31",
     "openapi-ts-request": "^1.10.0",
     "picocolors": "^1.1.1",
     "postcss": "^8.4.49",

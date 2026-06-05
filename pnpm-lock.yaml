@@ -209,8 +209,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       miniprogram-ci:
-        specifier: ^2.1.26
-        version: 2.1.26(eslint@9.34.0(jiti@2.6.1))
+        specifier: ^2.1.31
+        version: 2.1.31(eslint@9.34.0(jiti@2.6.1))
       openapi-ts-request:
         specifier: ^1.10.0
         version: 1.10.0(@types/node@20.19.11)(@vue/compiler-sfc@3.5.22)(chokidar@3.6.0)(typescript@5.8.3)
@@ -252,7 +252,7 @@ importers:
         version: 1.0.0(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))
       vite-plugin-uni-mini-ci:
         specifier: ^0.1.3
-        version: 0.1.3(miniprogram-ci@2.1.26(eslint@9.34.0(jiti@2.6.1)))(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))
+        version: 0.1.3(miniprogram-ci@2.1.31(eslint@9.34.0(jiti@2.6.1)))(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))
       vite-plugin-vue-devtools:
         specifier: ^8.0.5
         version: 8.0.5(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))(vue@3.4.21(typescript@5.8.3))
@@ -7465,8 +7465,8 @@ packages:
   miniprogram-api-typings@4.1.0:
     resolution: {integrity: sha512-4RBsz27nBKyRkVGoNkRaPx24/KeJBw3zaaIlXDR8s/WBh2PbcUAc+q7wLLbp7Qsmb3bLzzUu7tqAti+B06kmjg==}
 
-  miniprogram-ci@2.1.26:
-    resolution: {integrity: sha512-a83cOIRfwda7+HwEdG1LpqYAPfGGuGEGfJKRQ/9Yq29NCwmHX1oJSdLlAknqSAwsax2SxayaBQSkfbIbRRlY2w==}
+  miniprogram-ci@2.1.31:
+    resolution: {integrity: sha512-SREx6UnJC74aQ2a1YMNShqQOB97nHO+ll6ZQrCQp98NHXcRq848VjZoD5ELpd95z+8uTASQUAcFtl/HrXuM7Nw==}
     engines: {node: '>=16.1.0'}
     hasBin: true
 
@@ -14557,7 +14557,7 @@ snapshots:
       eslint-visitor-keys: 4.2.1
       espree: 10.4.0
       estraverse: 5.3.0
-      picomatch: 4.0.3
+      picomatch: 4.0.4
 
   '@swc/core-darwin-arm64@1.4.14':
     optional: true
@@ -14862,7 +14862,7 @@ snapshots:
       fast-glob: 3.3.3
       is-glob: 4.0.3
       minimatch: 9.0.5
-      semver: 7.7.3
+      semver: 7.8.2
       ts-api-utils: 2.1.0(typescript@5.8.3)
       typescript: 5.8.3
     transitivePeerDependencies:
@@ -16904,7 +16904,7 @@ snapshots:
       make-dir: 3.1.0
       onetime: 5.1.2
       pkg-up: 3.1.0
-      semver: 7.7.3
+      semver: 7.8.2
 
   confbox@0.1.8: {}
 
@@ -17543,12 +17543,12 @@ snapshots:
   eslint-compat-utils@0.5.1(eslint@9.34.0(jiti@2.6.1)):
     dependencies:
       eslint: 9.34.0(jiti@2.6.1)
-      semver: 7.7.3
+      semver: 7.8.2
 
   eslint-compat-utils@0.6.5(eslint@9.34.0(jiti@2.6.1)):
     dependencies:
       eslint: 9.34.0(jiti@2.6.1)
-      semver: 7.7.3
+      semver: 7.8.2
 
   eslint-config-flat-gitignore@2.1.0(eslint@9.34.0(jiti@2.6.1)):
     dependencies:
@@ -17626,7 +17626,7 @@ snapshots:
       espree: 10.4.0
       esquery: 1.6.0
       parse-imports-exports: 0.2.4
-      semver: 7.7.3
+      semver: 7.8.2
       spdx-expression-parse: 4.0.0
     transitivePeerDependencies:
       - supports-color
@@ -17656,7 +17656,7 @@ snapshots:
       globals: 15.15.0
       globrex: 0.1.2
       ignore: 5.3.2
-      semver: 7.7.3
+      semver: 7.8.2
       ts-declaration-location: 1.0.7(typescript@5.8.3)
     transitivePeerDependencies:
       - typescript
@@ -17680,7 +17680,7 @@ snapshots:
       jsonc-eslint-parser: 2.4.1
       pathe: 2.0.3
       pnpm-workspace-yaml: 1.2.0
-      tinyglobby: 0.2.15
+      tinyglobby: 0.2.17
       yaml-eslint-parser: 1.3.0
 
   eslint-plugin-regexp@2.10.0(eslint@9.34.0(jiti@2.6.1)):
@@ -17723,7 +17723,7 @@ snapshots:
       pluralize: 8.0.0
       regexp-tree: 0.1.27
       regjsparser: 0.12.0
-      semver: 7.7.3
+      semver: 7.8.2
       strip-indent: 4.1.0
 
   eslint-plugin-unused-imports@4.2.0(@typescript-eslint/eslint-plugin@8.46.0(@typescript-eslint/parser@8.46.0(eslint@9.34.0(jiti@2.6.1))(typescript@5.8.3))(eslint@9.34.0(jiti@2.6.1))(typescript@5.8.3))(eslint@9.34.0(jiti@2.6.1)):
@@ -17739,7 +17739,7 @@ snapshots:
       natural-compare: 1.4.0
       nth-check: 2.1.1
       postcss-selector-parser: 6.1.2
-      semver: 7.7.3
+      semver: 7.8.2
       vue-eslint-parser: 10.2.0(eslint@9.34.0(jiti@2.6.1))
       xml-name-validator: 4.0.0
     optionalDependencies:
@@ -19110,7 +19110,7 @@ snapshots:
       jest-util: 27.5.1
       natural-compare: 1.4.0
       pretty-format: 27.5.1
-      semver: 7.7.3
+      semver: 7.8.2
     transitivePeerDependencies:
       - supports-color
 
@@ -19335,7 +19335,7 @@ snapshots:
       acorn: 8.15.0
       eslint-visitor-keys: 3.4.3
       espree: 9.6.1
-      semver: 7.7.3
+      semver: 7.8.2
 
   jsonc-parser@3.3.1: {}
 
@@ -19648,7 +19648,7 @@ snapshots:
 
   make-dir@4.0.0:
     dependencies:
-      semver: 7.7.3
+      semver: 7.8.2
 
   make-synchronized@0.8.0: {}
 
@@ -20072,7 +20072,7 @@ snapshots:
 
   miniprogram-api-typings@4.1.0: {}
 
-  miniprogram-ci@2.1.26(eslint@9.34.0(jiti@2.6.1)):
+  miniprogram-ci@2.1.31(eslint@9.34.0(jiti@2.6.1)):
     dependencies:
       '@babel/code-frame': 7.22.10
       '@babel/compat-data': 7.22.9
@@ -20821,7 +20821,7 @@ snapshots:
 
   pnpm-workspace-yaml@1.2.0:
     dependencies:
-      yaml: 2.8.1
+      yaml: 2.9.0
 
   possible-typed-array-names@1.1.0: {}
 
@@ -22124,7 +22124,7 @@ snapshots:
 
   ts-declaration-location@1.0.7(typescript@5.8.3):
     dependencies:
-      picomatch: 4.0.3
+      picomatch: 4.0.4
       typescript: 5.8.3
 
   ts-morph@25.0.1:
@@ -22194,7 +22194,7 @@ snapshots:
 
   undici@7.26.0: {}
 
-  uni-mini-ci-core@0.1.3(miniprogram-ci@2.1.26(eslint@9.34.0(jiti@2.6.1))):
+  uni-mini-ci-core@0.1.3(miniprogram-ci@2.1.31(eslint@9.34.0(jiti@2.6.1))):
     dependencies:
       axios: 1.11.0
       bumpp: 11.1.0
@@ -22206,7 +22206,7 @@ snapshots:
       shelljs: 0.8.5
       zod: 4.4.3
     optionalDependencies:
-      miniprogram-ci: 2.1.26(eslint@9.34.0(jiti@2.6.1))
+      miniprogram-ci: 2.1.31(eslint@9.34.0(jiti@2.6.1))
     transitivePeerDependencies:
       - debug
       - encoding
@@ -22510,10 +22510,10 @@ snapshots:
       micromatch: 4.0.8
       vite: 5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1)
 
-  vite-plugin-uni-mini-ci@0.1.3(miniprogram-ci@2.1.26(eslint@9.34.0(jiti@2.6.1)))(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1)):
+  vite-plugin-uni-mini-ci@0.1.3(miniprogram-ci@2.1.31(eslint@9.34.0(jiti@2.6.1)))(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1)):
     dependencies:
       minimist: 1.2.8
-      uni-mini-ci-core: 0.1.3(miniprogram-ci@2.1.26(eslint@9.34.0(jiti@2.6.1)))
+      uni-mini-ci-core: 0.1.3(miniprogram-ci@2.1.31(eslint@9.34.0(jiti@2.6.1)))
     optionalDependencies:
       vite: 5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1)
     transitivePeerDependencies:
@@ -22621,7 +22621,7 @@ snapshots:
       eslint-visitor-keys: 4.2.1
       espree: 10.4.0
       esquery: 1.6.0
-      semver: 7.7.3
+      semver: 7.8.2
     transitivePeerDependencies:
       - supports-color
 
@@ -22833,7 +22833,7 @@ snapshots:
   yaml-eslint-parser@1.3.0:
     dependencies:
       eslint-visitor-keys: 3.4.3
-      yaml: 2.8.1
+      yaml: 2.9.0
 
   yaml@1.10.2: {}
 
