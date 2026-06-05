@@ -251,8 +251,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))
       vite-plugin-uni-mini-ci:
-        specifier: ^0.1.3
-        version: 0.1.3(miniprogram-ci@2.1.31(eslint@9.34.0(jiti@2.6.1)))(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))
+        specifier: ^0.1.4
+        version: 0.1.4(miniprogram-ci@2.1.31(eslint@9.34.0(jiti@2.6.1)))(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))
       vite-plugin-vue-devtools:
         specifier: ^8.0.5
         version: 8.0.5(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))(vue@3.4.21(typescript@5.8.3))
@@ -9384,8 +9384,8 @@ packages:
     resolution: {integrity: sha512-3O9Tf67pGhgOv9jM35AbhkXAKi13f3oy3aE4CSgr+TckGeY+/iu97ZXN+J7DpHPzLbVApFd1IFhcnBjREYXYcg==}
     engines: {node: '>=20.18.1'}
 
-  uni-mini-ci-core@0.1.3:
-    resolution: {integrity: sha512-d57RLTkgfsXtICV9b+sM4FKDp6yJOJ2a9PBBkldouSCUagrVqz55xcyfYq+gyLFHu8n85yLrFEYDcDZgKNleNg==}
+  uni-mini-ci-core@0.1.4:
+    resolution: {integrity: sha512-xzChZoNdb2GZuWXV3EWQrdtD44G65kjaVHkMlQNVMUmy5SwCmskJD50Z5WzcYG+CUIcNtRney50vlqL5q7r/OQ==}
     peerDependencies:
       jd-miniprogram-ci: ^1.0.5
       minidev: ^2.1.5
@@ -9628,8 +9628,8 @@ packages:
     peerDependencies:
       vite: ^2.9.0 || ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
 
-  vite-plugin-uni-mini-ci@0.1.3:
-    resolution: {integrity: sha512-uC/LHa/NK2uU/rcNPg/SwCMu+2zUTI019KSttwIh0K/6Dm8YeoNLJigie/+xlZkMgcqhE26Moa177p9CeEHxxQ==}
+  vite-plugin-uni-mini-ci@0.1.4:
+    resolution: {integrity: sha512-grLfCyNpeJJE1njTVhoDM88HGS4ocK+o3zmht2ug2HlnxB81FO4V5JF1oOeW3VSCvMOOoPJh0/mb3eqQmhjBQQ==}
     peerDependencies:
       vite: ^5.0.0 || ^4.0.0
     peerDependenciesMeta:
@@ -22194,7 +22194,7 @@ snapshots:
 
   undici@7.26.0: {}
 
-  uni-mini-ci-core@0.1.3(miniprogram-ci@2.1.31(eslint@9.34.0(jiti@2.6.1))):
+  uni-mini-ci-core@0.1.4(miniprogram-ci@2.1.31(eslint@9.34.0(jiti@2.6.1))):
     dependencies:
       axios: 1.11.0
       bumpp: 11.1.0
@@ -22510,10 +22510,10 @@ snapshots:
       micromatch: 4.0.8
       vite: 5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1)
 
-  vite-plugin-uni-mini-ci@0.1.3(miniprogram-ci@2.1.31(eslint@9.34.0(jiti@2.6.1)))(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1)):
+  vite-plugin-uni-mini-ci@0.1.4(miniprogram-ci@2.1.31(eslint@9.34.0(jiti@2.6.1)))(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1)):
     dependencies:
       minimist: 1.2.8
-      uni-mini-ci-core: 0.1.3(miniprogram-ci@2.1.31(eslint@9.34.0(jiti@2.6.1)))
+      uni-mini-ci-core: 0.1.4(miniprogram-ci@2.1.31(eslint@9.34.0(jiti@2.6.1)))
     optionalDependencies:
       vite: 5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1)
     transitivePeerDependencies:
