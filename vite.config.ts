@@ -27,7 +27,6 @@ import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig, loadEnv } from 'vite'
 import ViteRestart from 'vite-plugin-restart'
-import openDevTools from './scripts/open-dev-tools'
 import vitePluginEruda from './scripts/vite-plugin-eruda'
 import { createCopyNativeResourcesPlugin } from './vite-plugins/copy-native-resources'
 import syncManifestPlugin from './vite-plugins/sync-manifest-plugins'
@@ -54,7 +53,6 @@ export default defineConfig(({ command, mode }) => {
 
   const envDir = path.resolve(process.cwd(), 'env')
   const env = loadEnv(mode, envDir)
-  const localEnv = loadEnv(mode, envDir, '')
   const {
     VITE_APP_PORT,
     VITE_SERVER_BASEURL,
@@ -64,9 +62,7 @@ export default defineConfig(({ command, mode }) => {
     VITE_APP_PROXY_ENABLE,
     VITE_APP_PROXY_PREFIX,
     VITE_COPY_NATIVE_RES_ENABLE,
-    VITE_WX_APPID,
   } = env
-  const { WECHAT_DEVTOOLS_CLI_PATH } = localEnv
   console.log('环境变量 env -> ', env)
 
   return defineConfig({
@@ -118,20 +114,15 @@ export default defineConfig(({ command, mode }) => {
       },
 
       // @see https://github.com/GreatAuk/mini-ci, 支持微信、支付宝、百度、京东、抖音小程序的 CI 操作。
-      // 目前默认配置只支持微信小程序打开开发者工具并打开项目的功能。
+      // 目前下面的配置只支持微信小程序打开开发者工具并打开项目的功能，更多功能请参考文档配置。
       uniMiniCI({
         desc: ({ platform, version }) => `${platform} v${version} 自动构建;调用接口：${VITE_SERVER_BASEURL}`,
         // 微信小程序如果要使用 --upload, --preview 功能，请完成下面的配置
         // 'mp-weixin': {
-        //   appid: VITE_WX_APPID,
-        //   // 在微信小程序管理后台-开发管理-小程序代码上传-上传密钥获取
+        //   appid: env.VITE_WX_APPID,
+        //   // 密钥在微信小程序管理后台-开发管理-小程序代码上传-上传密钥获取
         //   privateKeyPath: './private.wx***************.key',
         // },
-        bumpOptions: {
-          push: true,
-          commit: true,
-          tag: true,
-        },
       }),
       UnoCSS(),
       AutoImport({
@@ -172,12 +163,6 @@ export default defineConfig(({ command, mode }) => {
       syncManifestPlugin(),
       vitePluginEruda({
         open: UNI_PLATFORM === 'h5' && mode === 'development',
-      }),
-      // 自动打开开发者工具插件 (必须修改 .env 文件中的 VITE_WX_APPID)
-      // 上传时通过 SKIP_OPEN_DEVTOOLS=true 跳过
-      SKIP_OPEN_DEVTOOLS !== 'true' && openDevTools({
-        mode,
-        wechatDevtoolsCliPath: WECHAT_DEVTOOLS_CLI_PATH,
       }),
     ],
     define: {
