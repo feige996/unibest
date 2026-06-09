@@ -4,14 +4,50 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { loadEnv } from 'vite'
 
 // 获取当前文件的目录路径（替代 CommonJS 中的 __dirname）
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
+const envDir = path.resolve(__dirname, '../env')
+const env = loadEnv('production', envDir)
+
+const VITE_APP_PUBLIC_BASE = env.VITE_APP_PUBLIC_BASE || '/'
+const VITE_APP_ROUTER_MODE = env.VITE_APP_ROUTER_MODE || 'hash'
+
 // 最简可运行配置
-const manifest = { }
+// 注意（针对H5服务器自动部署场景）：
+// 1. pages 数组必须包含至少 2 个页面，否则 @dcloudio 会将 __UNI_FEATURE_PAGES__ 设为 false，
+//    导致 vue-router 和 initRouter 被 tree-shake 移除，运行时路由跳转报错：
+//    "Cannot read properties of undefined (reading 'push')"
+// 2. easycom 配置必须包含，否则 uview-pro 等组件库不会被打包
+// 3. globalStyle 配置必须包含，否则导航栏等样式异常
+// 4. h5.router.mode 必须为 history，否则路由模式默认为 hash
+const manifest = {
+  h5: {
+    router: {
+      mode: VITE_APP_ROUTER_MODE,
+      base: VITE_APP_PUBLIC_BASE,
+    },
+  },
+}
 const pages = {
+  globalStyle: {
+    navigationStyle: 'default',
+    navigationBarTitleText: 'unibest',
+    navigationBarBackgroundColor: '#f8f8f8',
+    navigationBarTextStyle: 'black',
+    backgroundColor: '#FFFFFF',
+  },
+  easycom: {
+    autoscan: true,
+    custom: {
+      '^fg-(.*)': '@/components/fg-$1/fg-$1.vue',
+      '^(?!z-paging-refresh|z-paging-load-more)z-paging(.*)':
+        'z-paging/components/z-paging$1/z-paging$1.vue',
+    },
+  },
   pages: [
     {
       path: 'pages/index/index',
