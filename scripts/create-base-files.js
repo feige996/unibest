@@ -21,9 +21,9 @@ const VITE_APP_ROUTER_MODE = env.VITE_APP_ROUTER_MODE || 'hash'
 // 1. pages 数组必须包含至少 2 个页面，否则 @dcloudio 会将 __UNI_FEATURE_PAGES__ 设为 false，
 //    导致 vue-router 和 initRouter 被 tree-shake 移除，运行时路由跳转报错：
 //    "Cannot read properties of undefined (reading 'push')"
-// 2. easycom 配置必须包含，否则 uview-pro 等组件库不会被打包
+// 2. easycom 配置必须包含，否则相关组件库不会被打包
 // 3. globalStyle 配置必须包含，否则导航栏等样式异常
-// 4. h5.router.mode 必须为 history，否则路由模式默认为 hash
+// 4. h5.router.mode 需要同步设置为 history 或 hash，否则路由模式默认为 hash，可能导致部署后路由异常
 const manifest = {
   h5: {
     router: {
