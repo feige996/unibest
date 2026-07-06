@@ -1,3 +1,5 @@
+import type { HttpError, IResponse } from '@/http/types'
+
 export enum ResultEnum {
   // 0和200当做成功都很普遍，这里直接兼容两者（PS：0和200通常都不会当做错误码，但是有的接口会返回0，有的接口会返回200）
   Success0 = 0, // 成功
@@ -19,6 +21,25 @@ export enum ContentTypeEnum {
   JSON = 'application/json;charset=UTF-8',
   FORM_URLENCODED = 'application/x-www-form-urlencoded;charset=UTF-8',
   FORM_DATA = 'multipart/form-data;charset=UTF-8',
+}
+
+export enum HttpErrorType {
+  Business = 'business',
+  Auth = 'auth',
+  Http = 'http',
+  Network = 'network',
+}
+
+export function isSuccessResultCode(code: number): boolean {
+  return [ResultEnum.Success0, ResultEnum.Success200].includes(code)
+}
+
+export function getResponseMessage(responseData: Partial<IResponse<any>> | undefined, fallback = '请求错误'): string {
+  return responseData?.msg || responseData?.message || fallback
+}
+
+export function createHttpError<T>(params: HttpError<T>): HttpError<T> {
+  return params
 }
 /**
  * 根据状态码，生成对应的错误信息

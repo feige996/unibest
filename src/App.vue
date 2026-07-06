@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import { onHide, onLaunch, onShow } from '@dcloudio/uni-app'
-import { onMounted, onUnmounted } from 'vue'
+import { getCurrentInstance, onMounted, onUnmounted } from 'vue'
 import { navigateToInterceptor } from '@/router/interceptor'
 import { tabbarStore } from '@/tabbar/store'
+import { permission } from '@/router/permission'
+
+const { proxy } = (getCurrentInstance() || {}) as any
+const router = proxy?.$router
+
+router && permission.install(router)
 
 onLaunch((options) => {
   console.log('App.vue onLaunch', options)
@@ -20,7 +26,6 @@ onShow((options) => {
   else {
     navigateToInterceptor.invoke({ url: '/' })
   }
-  tabbarStore.syncCurIdxByCurrentPageAsync()
 })
 onHide(() => {
   console.log('App Hide')

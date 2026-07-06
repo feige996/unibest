@@ -15,6 +15,15 @@ export interface HttpRequestResult<T> {
   requestTask: UniApp.RequestTask
 }
 
+export interface HttpError<T = any> {
+  type: 'business' | 'auth' | 'http' | 'network'
+  code?: number
+  statusCode?: number
+  message: string
+  data?: T
+  raw?: unknown
+}
+
 // 通用响应格式（兼容 msg + message 字段）
 export type IResponse<T = any> = {
   code: number
