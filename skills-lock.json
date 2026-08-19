@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "skills": {
+    "uniapp-ad": {
+      "source": "full-stack-skills/uniapp-skills",
+      "sourceType": "github",
+      "skillPath": "skills/uniapp-ad/SKILL.md",
+      "computedHash": "03edfc5a3d96d6ecb0826a63c7fefa4d7f51ca03bae13ffb5171ab2455e3e47e"
+    },
+    "uniapp-cloud": {
+      "source": "full-stack-skills/uniapp-skills",
+      "sourceType": "github",
+      "skillPath": "skills/uniapp-cloud/SKILL.md",
+      "computedHash": "8dd31a2efeedb29f4c655088903e7d338d387bc0565b1c5479269877e23c12ef"
+    },
+    "uniapp-mini-guide": {
+      "source": "full-stack-skills/uniapp-skills",
+      "sourceType": "github",
+      "skillPath": "skills/uniapp-mini/SKILL.md",
+      "computedHash": "7c1e1ef9d5939fb39da0995b969f2291889eeadc3e54bfba7e295cb5d3fc702b"
+    },
+    "uniapp-native-app": {
+      "source": "full-stack-skills/uniapp-skills",
+      "sourceType": "github",
+      "skillPath": "skills/uniapp-native-app/SKILL.md",
+      "computedHash": "dec7b1a8cd6abc269b6010cb1fa31c03f437cbc3fddb810272c7c8ae25792320"
+    },
+    "uniapp-native-plugin": {
+      "source": "full-stack-skills/uniapp-skills",
+      "sourceType": "github",
+      "skillPath": "skills/uniapp-native-plugin/SKILL.md",
+      "computedHash": "717c29692c1aa8d353adf87dad9d42c611a2fd23b7a80cbdd21e2d7eff08ffd0"
+    },
+    "uniapp-plugin": {
+      "source": "full-stack-skills/uniapp-skills",
+      "sourceType": "github",
+      "skillPath": "skills/uniapp-plugin/SKILL.md",
+      "computedHash": "a1954e294d6083aeaec0f16b423290c86fbda81bf7b3678f251565ee3bc7ba21"
+    },
+    "uniapp-project": {
+      "source": "full-stack-skills/uniapp-skills",
+      "sourceType": "github",
+      "skillPath": "skills/uniapp-project/SKILL.md",
+      "computedHash": "a87d525672a0481fbc31aa2f0c174bcb661a9386e58c26c7bf33b4d293f06a8d"
+    },
+    "uniapp-project-creator": {
+      "source": "full-stack-skills/uniapp-skills",
+      "sourceType": "github",
+      "skillPath": "skills/uniapp-project-creator/SKILL.md",
+      "computedHash": "3a7cf89d86981a3171cb61582606569a1e80aa1aedab3a25ea48f7761857152c"
+    },
+    "uniapp-ucharts": {
+      "source": "full-stack-skills/uniapp-skills",
+      "sourceType": "github",
+      "skillPath": "skills/uniapp-ucharts/SKILL.md",
+      "computedHash": "9cd9127ad97ec28a1a44abc7861edecc24f89fda99abed4e2882f542bb43eba0"
+    },
+    "uniapp-uview": {
+      "source": "full-stack-skills/uniapp-skills",
+      "sourceType": "github",
+      "skillPath": "skills/uniapp-uview/SKILL.md",
+      "computedHash": "83422f4a4ca99f26a1fa7d5d3cb8f7142f58d83e4e7fe9707a10433d186814ec"
+    },
+    "uniappx-project": {
+      "source": "full-stack-skills/uniapp-skills",
+      "sourceType": "github",
+      "skillPath": "skills/uniappx-project/SKILL.md",
+      "computedHash": "6101379e7425adfef2dbc1e844394933548922d3641c0adda0cee0e40c4e3540"
+    },
+    "uniappx-project-creator": {
+      "source": "full-stack-skills/uniapp-skills",
+      "sourceType": "github",
+      "skillPath": "skills/uniappx-project-creator/SKILL.md",
+      "computedHash": "82030b7adc919b1583b373d425ef631d6126439e845f6071ba620a49610c735a"
+    },
+    "uniappx-uview-pro": {
+      "source": "full-stack-skills/uniapp-skills",
+      "sourceType": "github",
+      "skillPath": "skills/uniappx-uview-pro/SKILL.md",
+      "computedHash": "76049ba2c40906f0f71c076ba6131f0f8d777bfd41477809efac0ba4bcfc0cd5"
+    }
+  }
+}
