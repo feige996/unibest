@@ -30,5 +30,5 @@ pnpm build:h5   # H5 生产构建自动打开 visualizer 分析
 - 静态图片:大图优先网络地址或压缩后放 `src/static`;SVG 图标走 `src/static/my-icons/`(i-my-icons-*)
 - UnoCSS `safelist` 只加**动态拼接类名**,每加一项全量注入,能不用则不用
 - 列表页一律 z-paging(虚拟分页),不手写 onReachBottom 加载
-- auto-import(`src/hooks`)按名导入即用,但不引入未使用的 hooks——eslint 可查
+- auto-import(`src/hooks`)按名导入即用;注意 eslint 已关闭 no-unused-vars,未使用导入无守卫,删改代码时自查
 - 新增第三方依赖前看体积:小程序端无 tree-shake 保障的库(如全量 UI 库)优先按需引入

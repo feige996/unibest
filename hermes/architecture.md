@@ -44,11 +44,12 @@ src/
 ├── components/     # 全局组件(fg- 前缀,easycom 自动注册)
 ├── layouts/        # 布局
 ├── api/            # API 接口定义
-├── http/           # 请求封装(alova)
+├── http/           # 请求封装(uni.request 为主;alova 为可选并行链路,拦截器中默认注释)
 ├── store/          # Pinia store(持久化用 pinia-plugin-persistedstate)
 ├── hooks/          # 组合式函数(auto-import,免 import)
 ├── tabbar/         # 底部导航(config.ts 为唯一配置源)
 ├── static/         # 静态资源(@img 别名指向 images 子目录)
+├── service/        # openapi 生成目录(`pnpm openapi`,eslint 忽略,勿手改)
 └── types/          # 类型声明(大部分为生成物,见第 1 节)
 ```
 

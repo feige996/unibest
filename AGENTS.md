@@ -22,6 +22,16 @@
 2. **平台差异只用条件编译**:编译期能确定的不留运行时
 3. **UI 优先原子类**:先 UnoCSS,再自定义 CSS
 
+## AI 辅助 Skills
+
+项目自带 `.agents/skills/`(信任项目后自动加载),按场景选用:
+
+| Skill | 用途 |
+|-------|------|
+| uni-app | 框架文档参考:条件编译、生命周期、pages/manifest 配置;查官方文档优先用其推荐的 `search-docs-by-Uniapp-official` MCP 工具 |
+| uniapp-project | 官方组件/API 集成细节与跨端兼容性 |
+| uview-pro-vue3 | uView Pro 组件库参考(项目当前未安装该依赖,使用前先安装) |
+
 ## 核心配置文件
 
 - [package.json](mdc:package.json) - 依赖和脚本

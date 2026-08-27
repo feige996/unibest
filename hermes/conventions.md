@@ -2,7 +2,7 @@
 
 ## 1. Vue SFC
 
-- `<script setup lang="ts">` 必须第一个,`<template>` 第二,`<style scoped>` 最后
+- `<script setup lang="ts">` 必须第一个,`<template>` 第二,`<style scoped>` 最后(eslint `vue/block-order` error 强制)
 - 页面配置用 `definePage` 宏,且放在最上面
 - 组件文件 PascalCase 命名;全局组件放 `src/components/`(fg- 前缀,easycom 自动注册),局部组件放页面的 `components/` 子目录
 - 列表页用 z-paging(已配置 easycom:`<z-paging>` 直接用)
@@ -10,8 +10,9 @@
 
 ## 2. TypeScript
 
-- 禁止 `any`(eslint 强制)
+- 禁止新增 `any`(团队约定;eslint 未单独强制)
 - 对象类型用 `interface`,联合类型用 `type`;导入类型用 `import type`
+- 不自动排序 import:条件编译注释可能包裹 import(eslint 已关 `perfectionist/sort-imports`,勿重新打开)
 - API 响应必须在 `src/api/` 定义接口类型,响应数据过边界校验后才使用
 
 ## 3. 样式(UnoCSS)
