@@ -53,8 +53,7 @@ src/
 └── types/          # 类型声明(大部分为生成物,见第 1 节)
 ```
 
-- 别名:`@` → `src/`;`@img` → `src/static/images`(vite 运行时真相)
-- ⚠️ 已知不对称:vite 的 `@img` 指向 `src/static/images`,tsconfig 的 `@img/*` 指向 `src/static/*`。以 vite 为准,建议后续把 tsconfig paths 修正为 `./src/static/images/*`
+- 别名:`@` → `src/`;`@img` → `src/static/images`(vite 与 tsconfig 已对齐)
 - 请求一律走 `src/http` 封装,业务代码不直接调 `uni.request`
 - 服务端状态以接口为事实源,store 只放需要跨页共享/持久化的状态;凡不能从 store 重建的 UI 状态都是刷新后丢失的隐患
 

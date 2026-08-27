@@ -7,7 +7,7 @@
     "moduleResolution": "bundler",
     "paths": {
       "@/*": ["./src/*"],
-      "@img/*": ["./src/static/*"]
+      "@img/*": ["./src/static/images/*"]
     },
     "resolveJsonModule": true,
     "types": [
