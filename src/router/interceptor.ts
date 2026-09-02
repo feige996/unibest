@@ -3,7 +3,7 @@
  * 路由拦截，通常也是登录拦截
  * 黑、白名单的配置，请看 config.ts 文件， EXCLUDE_LOGIN_PATH_LIST
  */
-import { tabbarStore } from '@/tabbar/store'
+import { getTabbarRedirectPath, tabbarStore } from '@/tabbar/store'
 import { getLastPage, parseUrlToObj } from '@/utils/index'
 
 export const FG_LOG_ENABLE = false
@@ -43,6 +43,15 @@ export const navigateToInterceptor = {
     //   FG_LOG_ENABLE && console.log('路由拦截器 4: plugin:// 路径 ==>', url)
     //   path = url
     // }
+
+    // tabbar 项配置的 roles 只能隐藏入口，页面本身还是会生成到 pages.json（编译期产物，没法按角色裁剪）。
+    // 这里做运行时兜底：直接输入路由、分享进入、或首页恰好是受限页时，都不允许越权进入。
+    const redirectPath = getTabbarRedirectPath(path)
+    if (redirectPath) {
+      FG_LOG_ENABLE && console.log('路由拦截器: 角色不足，拦截 ->', path, '，回退到 ->', redirectPath)
+      uni.reLaunch({ url: redirectPath })
+      return false // 明确表示阻止原路由继续执行
+    }
 
     // 处理直接进入路由非首页时，tabbarIndex 不正确的问题
     tabbarStore.setAutoCurIdx(path)
