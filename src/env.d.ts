@@ -25,6 +25,10 @@ interface ImportMetaEnv {
   readonly VITE_APP_PROXY_ENABLE: 'true' | 'false'
   /** H5是否需要代理，需要的话有个前缀 */
   readonly VITE_APP_PROXY_PREFIX: string
+  /** H5部署网站的base路径 */
+  readonly VITE_APP_PUBLIC_BASE: string
+  /** H5路由模式 */
+  readonly VITE_APP_ROUTER_MODE: 'history' | 'hash'
   /** 后端是否有统一前缀 /api */
   readonly VITE_SERVER_HAS_API_PREFIX: 'true' | 'false'
   /** 认证模式，'single' | 'double' ==> 单token | 双token */
