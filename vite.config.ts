@@ -26,6 +26,11 @@ import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig, loadEnv } from 'vite'
 import ViteRestart from 'vite-plugin-restart'
+/**
+ * 自动生成vite的define配置的类型声明文件
+ * @see https://npmx.dev/package/vite-plugin-define-types-dts
+ */
+import { defineTypesPlugin } from 'vite-plugin-define-types-dts'
 import openDevTools from './scripts/open-dev-tools'
 import vitePluginEruda from './scripts/vite-plugin-eruda'
 import { createCopyNativeResourcesPlugin } from './vite-plugins/copy-native-resources'
@@ -160,9 +165,16 @@ export default defineConfig(({ command, mode }) => {
         mode,
         wechatDevtoolsCliPath: WECHAT_DEVTOOLS_CLI_PATH,
       }),
+      // 自动生成vite的define配置的类型声明文件
+      // outputPath: 声明文件的输出路径
+      // apply: 插件生效阶段 可选serve或build (默认值：serve 开发环境)
+      // 具体参考：https://npmx.dev/package/vite-plugin-define-types-dts#user-content-api
+      defineTypesPlugin({
+        outputPath: 'src/types/auto-vite-define-types.d.ts',
+      }),
     ],
     define: {
-      __VITE_APP_PROXY__: JSON.stringify(VITE_APP_PROXY_ENABLE),
+      __VITE_APP_PROXY__: VITE_APP_PROXY_ENABLE,
     },
     css: {
       postcss: {
