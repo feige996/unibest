@@ -28,6 +28,31 @@
 - `store.ts` ，专门给 `自定义 tabbar` 提供状态管理，代码几乎不需要修改。
 - `index.vue` ，专门给 `自定义 tabbar` 提供渲染逻辑，代码可以稍微修改，以符合自己的需求。
 
+## 按角色显示 tabbar 项（roles）
+
+给 `customTabbarList` 的某一项加上 `roles`，就只有命中角色的用户能看到这一项；不写 `roles` 表示所有用户可见。角色取自 `userStore.userInfo` 的 `roles`（多角色）或 `role`（单角色）。
+
+```ts
+{
+  pagePath: 'pages/about/about',
+  text: '关于',
+  iconType: 'unocss',
+  icon: 'i-carbon-menu',
+  roles: ['admin'], // 只有 admin 能看到这一项
+}
+```
+
+需要注意 `roles` 的作用范围：**它只隐藏 tabbar 入口，不会让页面消失**。
+
+`pages.json` 是编译期产物，页面一旦写在 `src/pages/` 下就一定会被生成，没法按运行时角色裁剪。所以只靠隐藏入口，用户仍然可以通过手输路由、分享链接进入该页面；如果受限页恰好就是首页（`type: 'home'`），冷启动时甚至会直接落在上面。
+
+为此 `store.ts` 提供了 `getTabbarRedirectPath(path)` 做运行时兜底：角色不足时返回第一个可见的 tabbar 页路径，否则返回 `''`。它已经接进两处路由守卫，正常使用无需额外配置：
+
+- `router/interceptor.ts`：拦截 `navigateTo` / `redirectTo` / `reLaunch` / `switchTab`，以及 `App.vue` 冷启动时的首屏路径（覆盖各端）
+- `router/permission.ts`：H5 的 vue-router `beforeEach`，覆盖地址栏直接输入和浏览器前进后退
+
+非 tabbar 页面的权限控制不走这里，按各自的登录/权限逻辑处理。
+
 ## 自定义tabbar的不同类型的配置
 
 - uiLib 图标
