@@ -2,7 +2,7 @@ import type { UserRole } from '@/api/types/login'
 import type { CustomTabBarItem, CustomTabBarItemBadge } from './types'
 import { computed, reactive, ref } from 'vue'
 import { useUserStore } from '@/store/user'
-import { HOME_PAGE } from '@/utils'
+import { HOME_PAGE } from '@/utils/homePage'
 
 import { tabbarList as _tabbarList, selectedTabbarStrategy, TABBAR_STRATEGY_MAP } from './config'
 
