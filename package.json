@@ -147,7 +147,7 @@
     "@uni-helper/eslint-config": "0.5.0",
     "@uni-helper/plugin-uni": "0.1.0",
     "@uni-helper/uni-env": "0.1.8",
-    "@uni-helper/uni-types": "1.0.0-alpha.6",
+    "@uni-helper/uni-types": "1.4.1",
     "@uni-helper/unocss-preset-uni": "0.2.11",
     "@uni-helper/vite-plugin-uni-components": "0.4.0",
     "@uni-helper/vite-plugin-uni-layouts": "0.1.11",
