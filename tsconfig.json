@@ -13,7 +13,7 @@
     "types": [
       "@dcloudio/types",
       "@uni-helper/uni-types",
-      "@uni-helper/vite-plugin-uni-pages",
+      "@uni-helper/vite-plugin-uni-pages/client",
       "miniprogram-api-typings",
       "z-paging/types",
       "vitest/globals",
