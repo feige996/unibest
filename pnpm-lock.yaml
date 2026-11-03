@@ -84,6 +84,9 @@ importers:
       pinia-plugin-persistedstate:
         specifier: 3.2.1
         version: 3.2.1(pinia@2.0.36(typescript@5.8.3)(vue@3.4.21(typescript@5.8.3)))
+      vite-plugin-define-types-dts:
+        specifier: ^1.0.3
+        version: 1.0.3(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))
       vue:
         specifier: ^3.4.21
         version: 3.4.21(typescript@5.8.3)
@@ -143,8 +146,8 @@ importers:
         specifier: 0.2.11
         version: 0.2.11(@unocss/preset-legacy-compat@66.0.0)(@unocss/preset-mini@66.5.3)(@unocss/rule-utils@66.5.3)(@unocss/vite@66.0.0(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))(vue@3.4.21(typescript@5.8.3)))(unocss-applet@0.11.0(unocss@66.0.0(postcss@8.5.6)(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))(vue@3.4.21(typescript@5.8.3))))(unocss@66.0.0(postcss@8.5.6)(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))(vue@3.4.21(typescript@5.8.3)))
       '@uni-helper/vite-plugin-uni-components':
-        specifier: 0.2.3
-        version: 0.2.3(rollup@4.50.0)
+        specifier: 0.4.0
+        version: 0.4.0(rollup@4.50.0)(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))
       '@uni-helper/vite-plugin-uni-layouts':
         specifier: 0.1.11
         version: 0.1.11(rollup@4.50.0)
@@ -2838,6 +2841,15 @@ packages:
       rollup:
         optional: true
 
+  '@rollup/pluginutils@5.5.1':
+    resolution: {integrity: sha512-P9ZvnfouRu4MSC+ilERaw6FmZs8zqKhpHxEs4aGDGWQAMzQGXnhvCSvoNwokfNvdt7t3Y5Y4p6gStQgezeIqug==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+
   '@rollup/rollup-android-arm-eabi@4.50.0':
     resolution: {integrity: sha512-lVgpeQyy4fWN5QYebtW4buT/4kn4p4IJ+kDNB4uYNT5b8c8DLJDg6titg20NIg7E8RWwdWZORW6vUFfrLyG3KQ==}
     cpu: [arm]
@@ -3343,8 +3355,11 @@ packages:
       '@unocss/vite':
         optional: true
 
-  '@uni-helper/vite-plugin-uni-components@0.2.3':
-    resolution: {integrity: sha512-in7jRYQnPkLg6W13dzz8mzHDuZC+OFc3qb8MrnmDQgniIxHfxJw8vaibL1au6gvq7ij3h6EHvhHaRytIJ2PkYw==}
+  '@uni-helper/vite-plugin-uni-components@0.4.0':
+    resolution: {integrity: sha512-ojMw5xDw9r2r7E3KQMbDOpSuNWSg/Ry5UjxJ9qO7e/T1xu5c2C76gxHb6A/U0JBoqrjrQh5UrUQ/df8GX+CLGg==}
+    peerDependencies:
+      rollup: ^4.0.0
+      vite: ^5.0.0
 
   '@uni-helper/vite-plugin-uni-layouts@0.1.11':
     resolution: {integrity: sha512-FXdFATBFsHAl7xY9q3KO0EexMRGua/7txIiQTm2rQi1/bXcft4CUXldtuHl9Upq0V6CT47aanmfzcOF5CpHK7Q==}
@@ -6796,16 +6811,16 @@ packages:
     resolution: {integrity: sha512-FMJTLMXfCLMLfJxcX9PFqX5qD88Z5MRGaZCVzfuqeZSPsyiBzs+pahDQjbIWz2QIzPZz0NX9Zy4FX3lmK6YHIg==}
     engines: {node: '>= 12.13.0'}
 
-  local-pkg@0.4.3:
-    resolution: {integrity: sha512-SFppqq5p42fe2qcZQqqEOiVRXl+WCP1MdT6k7BDEW1j++sp5fIY+/fdRQitvKgB5BrBcmrs5m/L0v2FrU5MY1g==}
-    engines: {node: '>=14'}
-
   local-pkg@0.5.1:
     resolution: {integrity: sha512-9rrA30MRRP3gBD3HTGnC6cDFpaE1kVDWxWgqWJUN0RvDNAo+Nz/9GxB+nHOH0ifbVFy0hSA1V6vFDvnx54lTEQ==}
     engines: {node: '>=14'}
 
   local-pkg@1.1.2:
     resolution: {integrity: sha512-arhlxbFRmoQHl33a0Zkle/YWlmNwoyt6QNZEIJcqNbdrsix5Lvc4HyyI3EnwxTYlZYc32EbYrQ8SzEZ7dqgg9A==}
+    engines: {node: '>=14'}
+
+  local-pkg@1.2.1:
+    resolution: {integrity: sha512-++gUqRDEvcnN6Zhqrr+y/CkVEHhlrR96vZn3nZZPYzMcBUyBtTKzB9NadClFIsIVSsu+3i9tfk/erqy9kAmt7Q==}
     engines: {node: '>=14'}
 
   localstorage-polyfill@1.0.1:
@@ -6982,6 +6997,9 @@ packages:
 
   magic-string@0.30.19:
     resolution: {integrity: sha512-2N21sPY9Ws53PZvsEpVtNuSW+ScYbQdp4b9qUaL+9QkHUrGFKo56Lg9Emg5s9V/qrtNBmiR01sYhUOwu3H+VOw==}
+
+  magic-string@0.30.21:
+    resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
 
   make-dir@1.3.0:
     resolution: {integrity: sha512-2w31R7SJtieJJnQtGc7RVL2StM2vGYVfqUOvUDxH6bC6aJTxPxTF0GnIgCyu7tjockiUWAYQRbxa7vKn34s5sQ==}
@@ -7239,10 +7257,6 @@ packages:
   minimatch@5.1.6:
     resolution: {integrity: sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==}
     engines: {node: '>=10'}
-
-  minimatch@8.0.4:
-    resolution: {integrity: sha512-W0Wvr9HyFXZRGIDgCicunpQ299OKXs9RgZfaukz4qAW/pJhcpUfupc9c+OObPOFueNy8VSrZgEmDtk6Kh4WzDA==}
-    engines: {node: '>=16 || 14 >=14.17'}
 
   minimatch@9.0.5:
     resolution: {integrity: sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==}
@@ -7768,6 +7782,10 @@ packages:
 
   picomatch@4.0.3:
     resolution: {integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==}
+    engines: {node: '>=12'}
+
+  picomatch@4.0.7:
+    resolution: {integrity: sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==}
     engines: {node: '>=12'}
 
   pidtree@0.6.0:
@@ -8970,6 +8988,10 @@ packages:
     resolution: {integrity: sha512-j2Zq4NyQYG5XMST4cbs02Ak8iJUdxRM0XI5QyxXuZOzKOINmWurp3smXu3y5wDcJrptwpSjgXHzIQxR0omXljQ==}
     engines: {node: '>=12.0.0'}
 
+  tinyglobby@0.2.17:
+    resolution: {integrity: sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==}
+    engines: {node: '>=12.0.0'}
+
   tinypool@1.1.1:
     resolution: {integrity: sha512-Zba82s87IFq9A9XmjiX5uZA/ARWDrB03OHlq+Vw1fSdt0I+4/Kutwy8BP4Y/y/aORMo61FQ0vIb5j44vSo5Pkg==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -9352,6 +9374,11 @@ packages:
     resolution: {integrity: sha512-EbKSKh+bh1E1IFxeO0pg1n4dvoOTt0UDiXMd/qn++r98+jPO1xtJilvXldeuQ8giIB5IkpjCgMleHMNEsGH6pg==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
+
+  vite-plugin-define-types-dts@1.0.3:
+    resolution: {integrity: sha512-qNtwcZ66IHKPUNwa62YFrWhqjUs71hVxSepPzm1TEskD7b13fYRPjf+JpV34W9Z5rZLAUDv3rBCFt9jI+unLYw==}
+    peerDependencies:
+      vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
 
   vite-plugin-inspect@11.3.3:
     resolution: {integrity: sha512-u2eV5La99oHoYPHE6UvbwgEqKKOQGz86wMg40CCosP6q8BkB6e5xPneZfYagK4ojPJSj5anHCrnvC20DpwVdRA==}
@@ -13979,6 +14006,14 @@ snapshots:
     optionalDependencies:
       rollup: 4.50.0
 
+  '@rollup/pluginutils@5.5.1(rollup@4.50.0)':
+    dependencies:
+      '@types/estree': 1.0.8
+      estree-walker: 2.0.2
+      picomatch: 4.0.7
+    optionalDependencies:
+      rollup: 4.50.0
+
   '@rollup/rollup-android-arm-eabi@4.50.0':
     optional: true
 
@@ -14458,19 +14493,18 @@ snapshots:
       '@unocss/preset-mini': 66.5.3
       '@unocss/vite': 66.0.0(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))(vue@3.4.21(typescript@5.8.3))
 
-  '@uni-helper/vite-plugin-uni-components@0.2.3(rollup@4.50.0)':
+  '@uni-helper/vite-plugin-uni-components@0.4.0(rollup@4.50.0)(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))':
     dependencies:
-      '@antfu/utils': 0.7.10
-      '@rollup/pluginutils': 5.2.0(rollup@4.50.0)
+      '@rollup/pluginutils': 5.5.1(rollup@4.50.0)
       chokidar: 3.6.0
-      debug: 4.4.1
-      fast-glob: 3.3.3
-      local-pkg: 0.4.3
-      magic-string: 0.30.18
-      minimatch: 8.0.4
-      resolve: 1.22.10
+      debug: 4.4.3
+      local-pkg: 1.2.1
+      magic-string: 0.30.21
+      picomatch: 4.0.7
+      rollup: 4.50.0
+      tinyglobby: 0.2.17
+      vite: 5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1)
     transitivePeerDependencies:
-      - rollup
       - supports-color
 
   '@uni-helper/vite-plugin-uni-layouts@0.1.11(rollup@4.50.0)':
@@ -17513,6 +17547,10 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.3
 
+  fdir@6.5.0(picomatch@4.0.7):
+    optionalDependencies:
+      picomatch: 4.0.7
+
   file-entry-cache@8.0.0:
     dependencies:
       flat-cache: 4.0.1
@@ -18922,14 +18960,18 @@ snapshots:
 
   loader-utils@3.3.1: {}
 
-  local-pkg@0.4.3: {}
-
   local-pkg@0.5.1:
     dependencies:
       mlly: 1.8.0
       pkg-types: 1.3.1
 
   local-pkg@1.1.2:
+    dependencies:
+      mlly: 1.8.0
+      pkg-types: 2.3.0
+      quansync: 0.2.11
+
+  local-pkg@1.2.1:
     dependencies:
       mlly: 1.8.0
       pkg-types: 2.3.0
@@ -19087,6 +19129,10 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.5
 
   magic-string@0.30.19:
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.5.5
+
+  magic-string@0.30.21:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
 
@@ -19506,10 +19552,6 @@ snapshots:
       brace-expansion: 1.1.12
 
   minimatch@5.1.6:
-    dependencies:
-      brace-expansion: 2.0.2
-
-  minimatch@8.0.4:
     dependencies:
       brace-expansion: 2.0.2
 
@@ -20205,6 +20247,8 @@ snapshots:
   picomatch@2.3.1: {}
 
   picomatch@4.0.3: {}
+
+  picomatch@4.0.7: {}
 
   pidtree@0.6.0: {}
 
@@ -21465,6 +21509,11 @@ snapshots:
       fdir: 6.5.0(picomatch@4.0.3)
       picomatch: 4.0.3
 
+  tinyglobby@0.2.17:
+    dependencies:
+      fdir: 6.5.0(picomatch@4.0.7)
+      picomatch: 4.0.7
+
   tinypool@1.1.1: {}
 
   tinyrainbow@2.0.0: {}
@@ -21894,6 +21943,10 @@ snapshots:
       - sugarss
       - supports-color
       - terser
+
+  vite-plugin-define-types-dts@1.0.3(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1)):
+    dependencies:
+      vite: 5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1)
 
   vite-plugin-inspect@11.3.3(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1)):
     dependencies:
