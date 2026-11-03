@@ -158,8 +158,8 @@ importers:
         specifier: 0.5.0
         version: 0.5.0(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))
       '@uni-helper/vite-plugin-uni-platform':
-        specifier: 0.0.5
-        version: 0.0.5
+        specifier: 0.1.2
+        version: 0.1.2(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))
       '@uni-ku/bundle-optimizer':
         specifier: v1.3.15-beta.2
         version: 1.3.15-beta.2(postcss@8.5.6)(rollup@4.50.0)(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))(vue@3.4.21(typescript@5.8.3))
@@ -3343,11 +3343,11 @@ packages:
       typescript: ^5.0.0 || ^6.0.0
       vue: ^3.0.0
 
-  '@uni-helper/uni-env@0.3.3':
-    resolution: {integrity: sha512-K+0XpSLlnxFPobSynThFKAqri2gRBX3je04BrnxsYC5niZE9MHxY56HfiQDZcWXwHWhcZG7jLj1cFItd9z1dZA==}
-
   '@uni-helper/uni-env@0.1.8':
     resolution: {integrity: sha512-oZQisgM5sFarGrswKHJvS5S7xNMXLjcBcPTKp2gzLMon+chdHiKua1+Hlqe/NX79Re35W4A6/QHDrw9cZ5AVGQ==}
+
+  '@uni-helper/uni-env@0.2.2':
+    resolution: {integrity: sha512-cTScRRKflwnx7WSA9mi3QELPMjKIeHFoR0I2RzqO1TuJ5PR45raHt+qmxR7n5fDe3t65ZKYsGS7WFPo0SniJxA==}
 
   '@uni-helper/uni-env@0.3.3':
     resolution: {integrity: sha512-K+0XpSLlnxFPobSynThFKAqri2gRBX3je04BrnxsYC5niZE9MHxY56HfiQDZcWXwHWhcZG7jLj1cFItd9z1dZA==}
@@ -3413,8 +3413,10 @@ packages:
     peerDependencies:
       vite: ^5.0.0
 
-  '@uni-helper/vite-plugin-uni-platform@0.0.5':
-    resolution: {integrity: sha512-T0lUwM3bGtGTcig3TBWP3VyRUQAY39/TMGL0064YMv8mt3F55S3KfpW7HIKEzV+EPF41TBX1ahhspuN8MJrpew==}
+  '@uni-helper/vite-plugin-uni-platform@0.1.2':
+    resolution: {integrity: sha512-kVpTYX2dEs0cI134s2Q49KNACNt55dyqgBTo0btN2wbch62Qqf+EkEv+ECsUJ1LIaFw8+4IqQjI0IJdnANpW5A==}
+    peerDependencies:
+      vite: ^5.0.0
 
   '@uni-ku/bundle-optimizer@1.3.15-beta.2':
     resolution: {integrity: sha512-cHm6VsUX5l7/khK+l6KPHPNZMBDerhVLjxmKzClgnncdkOZHA8HOlciEt5A8sAUWjqckjrVKPjrea/6JpAPIvw==}
@@ -9458,11 +9460,6 @@ packages:
       '@nuxt/kit':
         optional: true
 
-  vite-plugin-define-types-dts@1.0.3:
-    resolution: {integrity: sha512-qNtwcZ66IHKPUNwa62YFrWhqjUs71hVxSepPzm1TEskD7b13fYRPjf+JpV34W9Z5rZLAUDv3rBCFt9jI+unLYw==}
-    peerDependencies:
-      vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
-
   vite-plugin-restart@1.0.0:
     resolution: {integrity: sha512-t2ktkTOa+DQX05TEZm/3FE0DyrYEyFXdhG5gLcta5p71zOpg9yG3DeRcHWJVLJgWNoaVtOr4fUlr1kKu+WfXyQ==}
     peerDependencies:
@@ -14562,13 +14559,13 @@ snapshots:
       typescript: 5.8.3
       vue: 3.4.21(typescript@5.8.3)
 
-  '@uni-helper/uni-env@0.3.3':
+  '@uni-helper/uni-env@0.1.8':
     dependencies:
       std-env: 3.10.0
 
-  '@uni-helper/uni-env@0.1.8':
+  '@uni-helper/uni-env@0.2.2':
     dependencies:
-      std-env: 3.9.0
+      std-env: 3.10.0
 
   '@uni-helper/uni-env@0.3.3':
     dependencies:
@@ -14663,9 +14660,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@uni-helper/vite-plugin-uni-platform@0.0.5':
+  '@uni-helper/vite-plugin-uni-platform@0.1.2(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))':
     dependencies:
-      '@uni-helper/uni-env': 0.1.8
+      '@uni-helper/uni-env': 0.2.2
+      vite: 5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1)
 
   '@uni-ku/bundle-optimizer@1.3.15-beta.2(postcss@8.5.6)(rollup@4.50.0)(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))(vue@3.4.21(typescript@5.8.3))':
     dependencies:
@@ -22111,10 +22109,6 @@ snapshots:
       vite-dev-rpc: 1.1.0(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1))
     transitivePeerDependencies:
       - supports-color
-
-  vite-plugin-define-types-dts@1.0.3(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1)):
-    dependencies:
-      vite: 5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1)
 
   vite-plugin-restart@1.0.0(vite@5.2.8(@types/node@20.19.11)(less@4.5.1)(sass@1.77.8)(terser@5.43.1)):
     dependencies:
