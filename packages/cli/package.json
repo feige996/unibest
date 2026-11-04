@@ -1,8 +1,8 @@
 {
   "name": "create-unibest",
   "type": "module",
-  "version": "4.0.16",
-  "updateTime": "2026-04-25",
+  "version": "4.0.18",
+  "updateTime": "2026-11-04",
   "packageManager": "pnpm@10.10.0",
   "description": "快速创建 unibest 项目的脚手架工具",
   "author": "feige996",
@@ -29,6 +29,7 @@
     "dayjs": "^1.11.18",
     "ejs": "^4.0.0",
     "fs-extra": "^11.3.0",
+    "giget": "^3.3.1",
     "kolorist": "^1.8.0",
     "minimist": "^1.2.8",
     "node-fetch": "^3.3.2"

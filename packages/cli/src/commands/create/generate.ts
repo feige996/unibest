@@ -29,7 +29,7 @@ export async function generateProject(options: PromptResult) {
 
   const projectPath = path.join(root, projectName)
 
-  // 1. 克隆基础模板（base 分支）
+  // 1. 下载基础模板（base 分支）
   debug('拉取 base 分支')
   await cloneRepoByBranch(root, projectName, 'base', options)
 
