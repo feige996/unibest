@@ -1,0 +1,1921 @@
+{
+  "defaults": {
+    "timeoutMs": 20000
+  },
+  "tools": [
+    {
+      "id": "check_wechatide_status",
+      "name": "读取微信开发者工具状态",
+      "summary": "只读获取登录态（loginExpired）、当前用户（loginUser）、skill 版本关系（versionRelation）、CLI 可选令牌（cliTokenRequired / 兼容字段 tokenRequired）以及 MCP 是否需要独立 Token（mcpTokenRequired，始终为 true）；不触发登录。wechatide -c / skill-call 走可选 CLI 令牌（未配置则不验，本工具还可跳过 CLI 令牌）；wechatide mcp / Inspector 等 MCP 入口始终需要独立 MCP Token。MCP 缺 Token 时应提示用户重新复制 MCP 配置；仅当 cliTokenRequired 为 true 时后续 CLI / skill-call 命令须带 CLI 令牌。",
+      "group": "ide",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "initializer"
+      ],
+      "inputSchema": {
+        "skill-version": {
+          "type": "string",
+          "required": false,
+          "description": "调用侧加载的 wechatide-skill 版本；会话首次必须传，不传时 versionRelation 为 skip_check"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "check_wechatide_status"
+      }
+    },
+    {
+      "id": "close_project_window",
+      "name": "关闭项目窗口",
+      "summary": "关闭包含模拟器的项目窗口，不等于完全退出微信开发者工具",
+      "group": "ide",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "initializer"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true,
+          "description": "项目本地绝对路径；根目录必须包含 project.config.json"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "close_project_window"
+      }
+    },
+    {
+      "id": "open_project_window",
+      "name": "打开项目窗口",
+      "summary": "打开包含模拟器的项目窗口。如果之前窗口已存在，则不打开新窗口，直接返回已打开的窗口 ID",
+      "group": "ide",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "initializer"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true,
+          "description": "项目本地绝对路径；根目录必须包含 project.config.json"
+        },
+        "windowMode": {
+          "type": "string",
+          "required": false,
+          "enum": [
+            "liteMode",
+            "fullMode"
+          ],
+          "description": "窗口模式：默认 liteMode（仅模拟器）；fullMode 包含编辑器、模拟器和调试器"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "open_project_window"
+      }
+    },
+    {
+      "id": "quit",
+      "name": "退出工具",
+      "summary": "关闭 WechatIDE。",
+      "group": "ide",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "initializer"
+      ],
+      "inputSchema": {},
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "quit"
+      }
+    },
+    {
+      "id": "login",
+      "name": "触发扫码登录",
+      "summary": "触发扫码登录并返回 taskId；可打开独立置顶窗口，或直接向 agent 返回二维码图片。",
+      "group": "ide",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "initializer"
+      ],
+      "inputSchema": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "window",
+            "image"
+          ],
+          "default": "window",
+          "description": "二维码展示方式：window（默认）打开独立置顶窗口；image 直接返回二维码图片给 agent，且不切换开发者工具当前界面"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "login"
+      }
+    },
+    {
+      "id": "polling_task_result",
+      "name": "查询异步任务结果",
+      "summary": "通用异步结果查询：任何需要用户授权、扫码或操作确认的 toolCall 都会返回 taskId。",
+      "group": "ide",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "initializer",
+        "project-manager",
+        "compiler",
+        "previewer",
+        "debugger",
+        "automator",
+        "cloudbase-operator"
+      ],
+      "inputSchema": {
+        "taskId": {
+          "type": "string",
+          "required": true,
+          "description": "异步工具返回的 taskId"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "polling_task_result"
+      }
+    },
+    {
+      "id": "project_import",
+      "name": "导入项目到列表",
+      "summary": "将本地项目目录导入到微信开发者工具项目列表，不打开项目窗口；路径已在列表中时返回 alreadyImported。",
+      "group": "project-manager",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "project-manager"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true,
+          "description": "项目本地绝对路径"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "project_import"
+      }
+    },
+    {
+      "id": "share_minicode",
+      "name": "分享代码片段",
+      "summary": "将本地项目分享为代码片段并返回链接，不打开项目窗口。",
+      "group": "project-manager",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "project-manager"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true,
+          "description": "要分享为代码片段的项目绝对路径"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "share_minicode"
+      }
+    },
+    {
+      "id": "import_minicode",
+      "name": "导入代码片段",
+      "summary": "通过代码片段链接导入项目并加入项目列表，不打开项目窗口；导入后须先检查代码安全性。",
+      "group": "project-manager",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "project-manager"
+      ],
+      "inputSchema": {
+        "link": {
+          "type": "string",
+          "required": true,
+          "description": "代码片段链接"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "import_minicode"
+      }
+    },
+    {
+      "id": "project_list",
+      "name": "列出已导入项目",
+      "summary": "只读列出微信开发者工具已导入的项目列表；默认返回主列表（小程序/小游戏等），可通过 scope 查看其他项目。不等于打开项目窗口。",
+      "group": "project-manager",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "project-manager"
+      ],
+      "inputSchema": {
+        "scope": {
+          "type": "string",
+          "required": false,
+          "enum": [
+            "miniprogram",
+            "other",
+            "all"
+          ],
+          "description": "列表范围：miniprogram（默认）、other、all"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "project_list"
+      }
+    },
+    {
+      "id": "project_remove",
+      "name": "从列表删除项目",
+      "summary": "从项目列表移除项目，不删除磁盘文件，不等于关闭整个微信开发者工具。",
+      "group": "project-manager",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "project-manager"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true,
+          "description": "要从列表移除的项目本地绝对路径"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "project_remove"
+      }
+    },
+    {
+      "id": "auto_preview",
+      "name": "推送手机预览",
+      "summary": "把预览直接推送到开发者微信，无需生成二维码文件。",
+      "group": "project-action",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "previewer"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true
+        },
+        "page-path": {
+          "type": "string",
+          "required": false,
+          "description": "指定的预览页面路径，如 page/index"
+        },
+        "query": {
+          "type": "string",
+          "required": false,
+          "description": "指定的预览页面参数，如 a=b，多个参数用 & 连接，如 a=b&c=d"
+        },
+        "scene": {
+          "type": "string",
+          "required": false,
+          "description": "指定的预览进入的场景值，如 1001"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "auto_preview"
+      }
+    },
+    {
+      "id": "build_npm",
+      "name": "构建 npm",
+      "summary": "构建 npm。",
+      "group": "project-action",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "compiler"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true
+        },
+        "compile-type": {
+          "type": "string",
+          "required": false,
+          "enum": [
+            "miniprogram",
+            "plugin"
+          ]
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "build_npm"
+      }
+    },
+    {
+      "id": "create_preview_qrcode",
+      "name": "获取小程序预览二维码",
+      "summary": "生成可扫码的小程序预览二维码。默认使用 qr-format=window 在新窗口中展示，无需指定本地输出路径。",
+      "group": "project-action",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "previewer"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true
+        },
+        "qr-format": {
+          "type": "string",
+          "required": false,
+          "enum": [
+            "window",
+            "image"
+          ],
+          "description": "二维码展示方式。使用 window 在新窗口中展示。"
+        },
+        "qr-output": {
+          "type": "string",
+          "required": false,
+          "description": "二维码图片以文件形式输出的目标位置。"
+        },
+        "page-path": {
+          "type": "string",
+          "required": false,
+          "description": "指定的预览页面路径，如 page/index"
+        },
+        "query": {
+          "type": "string",
+          "required": false,
+          "description": "指定的预览页面参数，如 a=b，多个参数用 & 连接，如 a=b&c=d"
+        },
+        "scene": {
+          "type": "string",
+          "required": false,
+          "description": "指定的预览进入的场景值，如 1001"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "create_preview_qrcode"
+      }
+    },
+    {
+      "id": "upload",
+      "name": "发布体验版",
+      "summary": "上传代码包(发布体验版)。仅在用户明确要求「上传代码」或者「发布体验版」时调用。",
+      "group": "project-action",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "previewer"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true
+        },
+        "upload-version": {
+          "type": "string",
+          "required": true,
+          "description": "上传的代码版本号。如 1.0.0"
+        },
+        "desc": {
+          "type": "string",
+          "description": "上传的代码版本的描述信息。",
+          "required": false
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "upload"
+      }
+    },
+    {
+      "id": "project_setting_get",
+      "name": "读取项目设置",
+      "summary": "【已废弃】请改用 skills/project-config：直接读取 project.config.json / project.private.config.json。调用仅返回废弃提示。",
+      "group": "project-action",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [],
+      "deprecated": true,
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "project_setting_get"
+      }
+    },
+    {
+      "id": "project_setting_update",
+      "name": "更新项目设置",
+      "summary": "【已废弃】请改用 skills/project-config：直接修改 project.config.json / project.private.config.json。调用仅返回废弃提示，不会写入。",
+      "group": "project-action",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [],
+      "deprecated": true,
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true
+        },
+        "settings": {
+          "type": "object",
+          "required": true
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "project_setting_update"
+      }
+    },
+    {
+      "id": "simulator_open_page",
+      "name": "编译并打开指定页面",
+      "summary": "触发项目窗口模拟器编译并打开指定页面。",
+      "group": "project-action",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "compiler"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true,
+          "description": "项目绝对路径"
+        },
+        "page": {
+          "type": "string",
+          "required": true,
+          "description": "页面路径（如 pages/index/index）"
+        },
+        "query": {
+          "type": "string",
+          "required": false,
+          "description": "页面参数（如 id=1&type=test）"
+        },
+        "scene": {
+          "type": "number",
+          "required": false,
+          "description": "场景值（默认 1001）"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "simulator_open_page"
+      }
+    },
+    {
+      "id": "simulator_refresh",
+      "name": "刷新模拟器",
+      "summary": "触发项目窗口模拟器重新编译/刷新当前页面；不返回编译结果",
+      "group": "project-action",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "compiler"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "simulator_refresh"
+      }
+    },
+    {
+      "id": "get_simulator_console",
+      "name": "读取 console",
+      "summary": "对小程序 console 缓冲区执行 grep 过滤并返回命中行。command 是 grep 命令字符串（不含文件名），如 'grep -i error'。要获取全部日志请用 'grep -n .'（匹配任意行）。返回空字符串代表没有匹配行，不代表 console 为空。",
+      "group": "runtime",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "debugger"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true,
+          "description": "项目绝对路径"
+        },
+        "command": {
+          "type": "string",
+          "required": true,
+          "description": "grep 命令字符串（不含文件名），例如: 'grep -n .'（全部）、'grep -i error'（过滤 error）、'grep -n warn'（过滤 warn）。不要传 'all' 等枚举值。"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "get_simulator_console"
+      }
+    },
+    {
+      "id": "get_simulator_network",
+      "name": "读取 network",
+      "summary": "对小程序 network 缓冲区执行 grep 过滤并返回命中行。command 是 grep 命令字符串（不含文件名）。要获取全部请求记录请用 'grep -n .'。",
+      "group": "runtime",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "debugger"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true,
+          "description": "项目绝对路径"
+        },
+        "command": {
+          "type": "string",
+          "required": true,
+          "description": "grep 命令字符串（不含文件名），例如: 'grep -n .'（全部）、'grep -i fail'（过滤失败请求）。"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "get_simulator_network"
+      }
+    },
+    {
+      "id": "simulator_screenshot",
+      "name": "截取模拟器画面",
+      "summary": "截图；返回 path + imageWidth/imageHeight；默认优化尺寸（长边 1280 JPEG）",
+      "group": "runtime",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "debugger",
+        "automator"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true,
+          "description": "项目绝对路径"
+        },
+        "path": {
+          "type": "string",
+          "required": false,
+          "description": "可选，截图本地输出路径；不传则写入系统临时目录并返回该路径"
+        },
+        "wait": {
+          "type": "number",
+          "required": false,
+          "description": "截图前固定等待秒数（可选；和 waitForSelector 可同时传；范围 0-10）"
+        },
+        "waitForSelector": {
+          "type": "string",
+          "required": false,
+          "description": "截图前等待出现的选择器（可选；推荐优先使用）"
+        },
+        "optimize": {
+          "type": "boolean",
+          "required": false,
+          "description": "是否优化截图尺寸和分辨率（默认 true，写 JPEG）；false 时写原始 PNG"
+        },
+        "quality": {
+          "type": "number",
+          "required": false,
+          "description": "JPEG 质量（默认 80，范围 1-100）；仅 optimize=true 时生效"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "simulator_screenshot"
+      }
+    },
+    {
+      "id": "get_user_appids",
+      "name": "获取用户可管理的全部 AppID",
+      "summary": "获取当前登录用户可管理的全部 AppID 列表。可通过 type 按小程序/小游戏过滤。",
+      "group": "runtime",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "initializer"
+      ],
+      "inputSchema": {
+        "type": {
+          "type": "string",
+          "required": false,
+          "enum": [
+            "all",
+            "miniprogram",
+            "minigame"
+          ],
+          "description": "类型：all(默认) 或 miniprogram、minigame"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "get_user_appids"
+      }
+    },
+    {
+      "id": "compile_wxml",
+      "name": "编译 WXML 模板",
+      "summary": "只读获取 WXML 模板的编译结果摘要，用于诊断模板编译产物；不是整页编译或预览。",
+      "group": "compile",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "compiler"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true
+        },
+        "filePath": {
+          "type": "string",
+          "required": true,
+          "description": "待编译 WXML 文件相对路径（相对于 miniprogramRoot 或 pluginRoot），如 pages/index/index.wxml"
+        },
+        "compileType": {
+          "type": "string",
+          "required": false,
+          "enum": [
+            "miniprogram",
+            "plugin"
+          ],
+          "description": "编译类型：miniprogram(默认) 或 plugin"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "compile_wxml"
+      }
+    },
+    {
+      "id": "compile_wxss",
+      "name": "编译 WXSS 样式",
+      "summary": "只读获取 WXSS 样式的编译结果摘要，用于诊断样式编译产物；不是整页编译或预览。",
+      "group": "compile",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "compiler"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true
+        },
+        "filePath": {
+          "type": "string",
+          "required": true,
+          "description": "待编译 WXSS 文件相对路径（相对于 miniprogramRoot 或 pluginRoot），如 pages/index/index.wxss"
+        },
+        "compileType": {
+          "type": "string",
+          "required": false,
+          "enum": [
+            "miniprogram",
+            "plugin"
+          ],
+          "description": "编译类型：miniprogram(默认) 或 plugin"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "compile_wxss"
+      }
+    },
+    {
+      "id": "automation_element_action",
+      "name": "元素级操作",
+      "summary": "读取或操作页面元素；有 selector 时按元素操作；tap/touch*/longpress 可改传 x/y（视口 CSS 像素）直接坐标触控，二者勿同时传；支持操作前等待。",
+      "group": "automation",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "automator"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true
+        },
+        "action": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "tap",
+            "longpress",
+            "trigger",
+            "input",
+            "size",
+            "offset",
+            "text",
+            "attribute",
+            "value",
+            "property",
+            "wxml",
+            "outerWxml",
+            "style",
+            "scrollWidth",
+            "scrollHeight",
+            "scrollTo",
+            "touchstart",
+            "touchmove",
+            "touchend"
+          ]
+        },
+        "selector": {
+          "type": "string",
+          "required": false,
+          "description": "元素选择器；tap/touch*/longpress 可省略并改传 x/y；其余 action 必填"
+        },
+        "type": {
+          "type": "string",
+          "required": false
+        },
+        "detail": {
+          "type": "object",
+          "required": false
+        },
+        "value": {
+          "type": "string",
+          "required": false
+        },
+        "name": {
+          "type": "string",
+          "required": false
+        },
+        "x": {
+          "type": "number",
+          "required": false,
+          "description": "x：坐标触控为视口 CSS 像素；scrollTo 为横向滚动位置"
+        },
+        "y": {
+          "type": "number",
+          "required": false,
+          "description": "y：坐标触控为视口 CSS 像素；scrollTo 为纵向滚动位置"
+        },
+        "touches": {
+          "type": "array",
+          "required": false,
+          "description": "触摸点数组（有 selector 的 touchstart/touchmove/touchend 需要）"
+        },
+        "changedTouches": {
+          "type": "array",
+          "required": false,
+          "description": "变化触摸点数组（有 selector 的 touchstart/touchmove/touchend 需要）"
+        },
+        "wait": {
+          "type": "number",
+          "required": false,
+          "description": "执行前固定等待秒数（可选；和 waitForSelector 可同时传；范围 0-10）"
+        },
+        "waitForSelector": {
+          "type": "string",
+          "required": false,
+          "description": "执行前等待出现的选择器（可选；推荐优先使用）"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "automation_element_action"
+      }
+    },
+    {
+      "id": "automation_game_action",
+      "name": "小游戏画布触摸",
+      "summary": "小游戏画布触摸：tap / swipe / touch*；坐标默认画布空间，可用 coordinateSpace=image + imageWidth/Height 按截图像素换算；截图请用 simulator_screenshot。",
+      "group": "automation",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "automator"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true,
+          "description": "项目绝对路径"
+        },
+        "action": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "tap",
+            "swipe",
+            "touchstart",
+            "touchmove",
+            "touchend"
+          ],
+          "description": "触摸操作类型"
+        },
+        "x": {
+          "type": "number",
+          "required": false,
+          "description": "坐标 x（tap / touch* 需要）"
+        },
+        "y": {
+          "type": "number",
+          "required": false,
+          "description": "坐标 y（tap / touch* 需要）"
+        },
+        "startX": {
+          "type": "number",
+          "required": false,
+          "description": "滑动起点 x（swipe 需要）"
+        },
+        "startY": {
+          "type": "number",
+          "required": false,
+          "description": "滑动起点 y（swipe 需要）"
+        },
+        "endX": {
+          "type": "number",
+          "required": false,
+          "description": "滑动终点 x（swipe 需要）"
+        },
+        "endY": {
+          "type": "number",
+          "required": false,
+          "description": "滑动终点 y（swipe 需要）"
+        },
+        "duration": {
+          "type": "number",
+          "required": false,
+          "description": "滑动时长毫秒（swipe 可选，默认 0）"
+        },
+        "coordinateSpace": {
+          "type": "string",
+          "required": false,
+          "enum": [
+            "canvas",
+            "image"
+          ],
+          "description": "坐标空间：canvas（默认，画布逻辑坐标）或 image（截图像素，需 imageWidth/imageHeight）"
+        },
+        "imageWidth": {
+          "type": "number",
+          "required": false,
+          "description": "截图宽度像素（coordinateSpace=image 时必填；与当前参照图一致）"
+        },
+        "imageHeight": {
+          "type": "number",
+          "required": false,
+          "description": "截图高度像素（coordinateSpace=image 时必填；与当前参照图一致）"
+        },
+        "wait": {
+          "type": "number",
+          "required": false,
+          "description": "执行前固定等待秒数（可选；范围 0-10；小游戏无 selector 等待）"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "automation_game_action"
+      }
+    },
+    {
+      "id": "automation_evaluate",
+      "name": "运行时执行",
+      "summary": "在当前小程序或小游戏运行时执行一段 JS 函数字符串并返回结果。该工具会实际执行代码，不是只读查询",
+      "group": "automation",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "automator"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true,
+          "description": "项目绝对路径"
+        },
+        "action": {
+          "type": "string",
+          "fixed": true,
+          "description": "Always sent as \"evaluate\""
+        },
+        "fnSource": {
+          "type": "string",
+          "required": true,
+          "description": "函数源代码字符串，例如 function() { return wx.getSystemInfoSync(); }"
+        },
+        "args": {
+          "type": "array",
+          "required": false,
+          "description": "函数参数"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "automation_evaluate"
+      }
+    },
+    {
+      "id": "automation_generate_script",
+      "name": "生成 automator 脚本",
+      "summary": "把已记录调用生成可用 node 运行的 automator 脚本；不传项目路径时使用录制时的路径。",
+      "group": "automation",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "automator"
+      ],
+      "inputSchema": {
+        "includeFailed": {
+          "type": "boolean",
+          "required": false
+        },
+        "clearHistory": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "automation_generate_script"
+      }
+    },
+    {
+      "id": "automation_navigate",
+      "name": "页面导航",
+      "summary": "在当前小程序运行时执行页面导航，不负责页面断言；支持 waitForSelector / wait 在导航前等待。",
+      "group": "automation",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "automator"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true
+        },
+        "action": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "navigateTo",
+            "redirectTo",
+            "navigateBack",
+            "reLaunch",
+            "switchTab"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "required": false
+        },
+        "delta": {
+          "type": "number",
+          "required": false
+        },
+        "wait": {
+          "type": "number",
+          "required": false,
+          "description": "执行前固定等待秒数（可选；和 waitForSelector 可同时传；范围 0-10）"
+        },
+        "waitForSelector": {
+          "type": "string",
+          "required": false,
+          "description": "执行前等待出现的选择器（可选；推荐优先使用）"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "automation_navigate"
+      }
+    },
+    {
+      "id": "automation_page_action",
+      "name": "页面级操作",
+      "summary": "针对当前页面实例执行页面级读写。可选 waitForSelector/wait 在操作前等待",
+      "group": "automation",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "automator"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true,
+          "description": "项目绝对路径"
+        },
+        "action": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "getData",
+            "setData",
+            "querySelector",
+            "querySelectorAll",
+            "size",
+            "callMethod",
+            "scrollTop"
+          ],
+          "description": "操作类型"
+        },
+        "dataPath": {
+          "type": "string",
+          "required": false,
+          "description": "页面 data 字段路径（getData 可选；如 list、userInfo.nickName，不是页面路由）"
+        },
+        "patch": {
+          "type": "string",
+          "required": false,
+          "description": "data json 字符串 更改（setData 需要）"
+        },
+        "selector": {
+          "type": "string",
+          "required": false,
+          "description": "选择器字符串（querySelector/querySelectorAll 需要）"
+        },
+        "method": {
+          "type": "string",
+          "required": false,
+          "description": "页面方法名（callMethod 需要）"
+        },
+        "args": {
+          "type": "array",
+          "required": false,
+          "description": "方法参数（callMethod 需要）"
+        },
+        "wait": {
+          "type": "number",
+          "required": false,
+          "description": "执行前固定等待秒数（可选；和 waitForSelector 可同时传；范围 0-10）"
+        },
+        "waitForSelector": {
+          "type": "string",
+          "required": false,
+          "description": "执行前等待出现的选择器（可选；推荐优先使用）"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "automation_page_action"
+      }
+    },
+    {
+      "id": "automation_runtime_info",
+      "name": "运行时信息",
+      "summary": "读取当前小程序运行时信息。",
+      "group": "automation",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "initializer",
+        "automator",
+        "debugger"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true
+        },
+        "action": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "pageStack",
+            "currentPage",
+            "systemInfo"
+          ]
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "automation_runtime_info"
+      }
+    },
+    {
+      "id": "automation_testaccount",
+      "name": "测试号与 ticket",
+      "summary": "管理小程序测试号与登录 ticket：列出测试号、获取/设置/刷新 ticket。",
+      "group": "automation",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "automator"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true
+        },
+        "action": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "list",
+            "getTicket",
+            "setTicket",
+            "refreshTicket"
+          ],
+          "description": "操作类型"
+        },
+        "ticket": {
+          "type": "string",
+          "required": false,
+          "description": "登录票据（setTicket 需要）"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "automation_testaccount"
+      }
+    },
+    {
+      "id": "automation_viewport_action",
+      "name": "页面操作",
+      "summary": "执行滚动、真机调试或关闭工具；支持操作前等待",
+      "group": "automation",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "automator"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true
+        },
+        "action": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "pageScrollTo",
+            "screenshot",
+            "stopAudits",
+            "remote",
+            "close"
+          ],
+          "description": "操作类型（screenshot 为兼容别名，等同 simulator_screenshot）"
+        },
+        "scrollTop": {
+          "type": "number",
+          "required": false
+        },
+        "path": {
+          "type": "string",
+          "required": false,
+          "description": "截图本地输出路径（screenshot 可选；不传则写入系统临时目录并返回该路径）"
+        },
+        "wait": {
+          "type": "number",
+          "required": false,
+          "description": "执行前固定等待秒数（可选；和 waitForSelector 可同时传；范围 0-10）"
+        },
+        "waitForSelector": {
+          "type": "string",
+          "required": false,
+          "description": "执行前等待出现的选择器（可选；推荐优先使用）"
+        },
+        "auto": {
+          "type": "boolean",
+          "required": false,
+          "description": "是否自动真机调试（remote 需要，默认 false）"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "automation_viewport_action"
+      }
+    },
+    {
+      "id": "automation_wx_api",
+      "name": "小程序 API 调试",
+      "summary": "调用、mock 或恢复 wx API。",
+      "group": "automation",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "debugger",
+        "automator"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true
+        },
+        "action": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "call",
+            "mock",
+            "restore"
+          ]
+        },
+        "method": {
+          "type": "string",
+          "required": true
+        },
+        "args": {
+          "type": "array",
+          "required": false
+        },
+        "result": {
+          "type": "object",
+          "required": false
+        },
+        "functionDeclaration": {
+          "type": "string",
+          "required": false
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "automation_wx_api"
+      }
+    },
+    {
+      "id": "debug_clear_cache",
+      "name": "清理缓存",
+      "summary": "清理当前项目的本地调试缓存，会影响当前调试上下文；清除的缓存类型由 action 指定。",
+      "group": "debug",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "debugger"
+      ],
+      "inputSchema": {
+        "project": {
+          "type": "string",
+          "required": true
+        },
+        "action": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "cleanFileCache",
+            "cleanStorageCache",
+            "clearAuth",
+            "cleanWebViewCache",
+            "clearSession",
+            "cleanCompileCache",
+            "cleanProjectFileListCache",
+            "cleanAllSimulatorCache",
+            "cleanAll"
+          ]
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "debug_clear_cache"
+      }
+    },
+    {
+      "id": "cloud_db_read_doc",
+      "name": "读取云数据库内容",
+      "summary": "只读查询云数据库集合文档，支持条件、投影、排序和分页。",
+      "group": "cloud",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "cloudbase-operator"
+      ],
+      "inputSchema": {
+        "appid": {
+          "type": "string",
+          "required": true,
+          "description": "小程序 AppID"
+        },
+        "env": {
+          "type": "string",
+          "required": true,
+          "description": "云开发环境 ID，请先用 cloud_env_list 获取"
+        },
+        "collectionName": {
+          "type": "string",
+          "required": true,
+          "description": "集合名称"
+        },
+        "query": {
+          "type": "object",
+          "required": false,
+          "description": "查询条件对象"
+        },
+        "projection": {
+          "type": "object",
+          "required": false,
+          "description": "返回字段投影"
+        },
+        "sort": {
+          "type": "array",
+          "required": false,
+          "description": "排序条件，如 [{\"key\":\"createdAt\",\"direction\":-1}]"
+        },
+        "limit": {
+          "type": "number",
+          "required": false,
+          "description": "返回数量限制"
+        },
+        "offset": {
+          "type": "number",
+          "required": false,
+          "description": "跳过记录数"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "cloud_db_read_doc"
+      }
+    },
+    {
+      "id": "cloud_db_read_struct",
+      "name": "读取云数据库结构",
+      "summary": "只读查询云数据库集合与索引结构。",
+      "group": "cloud",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "cloudbase-operator"
+      ],
+      "inputSchema": {
+        "appid": {
+          "type": "string",
+          "required": true,
+          "description": "小程序 AppID"
+        },
+        "env": {
+          "type": "string",
+          "required": true,
+          "description": "云开发环境 ID，请先用 cloud_env_list 获取"
+        },
+        "action": {
+          "type": "string",
+          "required": true,
+          "description": "listCollections | describeCollection | checkCollection | listIndexes | checkIndex"
+        },
+        "collectionName": {
+          "type": "string",
+          "required": false,
+          "description": "集合名称；describeCollection/listIndexes/checkCollection 时使用"
+        },
+        "indexName": {
+          "type": "string",
+          "required": false,
+          "description": "索引名称；checkIndex 时使用"
+        },
+        "limit": {
+          "type": "number",
+          "required": false,
+          "description": "返回数量限制"
+        },
+        "offset": {
+          "type": "number",
+          "required": false,
+          "description": "分页偏移"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "cloud_db_read_struct"
+      }
+    },
+    {
+      "id": "cloud_db_write_doc",
+      "name": "修改云数据库内容",
+      "summary": "修改云数据库集合文档（插入/更新/删除），属于写操作。",
+      "group": "cloud",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "cloudbase-operator"
+      ],
+      "inputSchema": {
+        "appid": {
+          "type": "string",
+          "required": true,
+          "description": "小程序 AppID"
+        },
+        "env": {
+          "type": "string",
+          "required": true,
+          "description": "云开发环境 ID，请先用 cloud_env_list 获取"
+        },
+        "action": {
+          "type": "string",
+          "required": true,
+          "description": "insert | update | delete"
+        },
+        "collectionName": {
+          "type": "string",
+          "required": true,
+          "description": "集合名称"
+        },
+        "documents": {
+          "type": "array",
+          "required": false,
+          "description": "insert 操作的文档数组"
+        },
+        "query": {
+          "type": "object",
+          "required": false,
+          "description": "update/delete 操作的查询条件"
+        },
+        "update": {
+          "type": "object",
+          "required": false,
+          "description": "update 操作的更新内容，推荐使用 $set/$inc/$unset 等操作符"
+        },
+        "isMulti": {
+          "type": "boolean",
+          "required": false,
+          "description": "是否更新或删除多条记录"
+        },
+        "upsert": {
+          "type": "boolean",
+          "required": false,
+          "description": "update 时不存在则插入"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "cloud_db_write_doc"
+      }
+    },
+    {
+      "id": "cloud_db_write_struct",
+      "name": "修改云数据库结构",
+      "summary": "修改云数据库集合结构（创建/删除集合、管理索引），属于写操作。",
+      "group": "cloud",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "cloudbase-operator"
+      ],
+      "inputSchema": {
+        "appid": {
+          "type": "string",
+          "required": true,
+          "description": "小程序 AppID"
+        },
+        "env": {
+          "type": "string",
+          "required": true,
+          "description": "云开发环境 ID，请先用 cloud_env_list 获取"
+        },
+        "action": {
+          "type": "string",
+          "required": true,
+          "description": "createCollection | updateCollection | deleteCollection"
+        },
+        "collectionName": {
+          "type": "string",
+          "required": true,
+          "description": "集合名称"
+        },
+        "updateOptions": {
+          "type": "object",
+          "required": false,
+          "description": "updateCollection 使用；CreateIndexes 添加索引，DropIndexes 删除索引"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "cloud_db_write_struct"
+      }
+    },
+    {
+      "id": "cloud_env_list",
+      "name": "列出云环境",
+      "summary": "只读列出当前项目或 AppID 可用的云环境",
+      "group": "cloud",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "cloudbase-operator"
+      ],
+      "inputSchema": {
+        "appid": {
+          "type": "string",
+          "required": false,
+          "description": "小程序 AppID；如 appid 和 project 都填写，优先使用 appid"
+        },
+        "project": {
+          "type": "string",
+          "required": false,
+          "description": "项目绝对路径；如 appid 未指定，会从项目路径下的 project.config.json 中获取 appid"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "cloud_env_list"
+      }
+    },
+    {
+      "id": "cloud_fn_deploy",
+      "name": "部署云函数",
+      "summary": "按云函数目录路径完整部署单个云函数到指定云环境，属于写操作；一次只允许部署一个云函数目录，目录名即函数名称。",
+      "group": "cloud",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "cloudbase-operator"
+      ],
+      "inputSchema": {
+        "appid": {
+          "type": "string",
+          "required": true,
+          "description": "小程序 AppID"
+        },
+        "env": {
+          "type": "string",
+          "required": true,
+          "description": "云环境 ID"
+        },
+        "path": {
+          "type": "string",
+          "required": true,
+          "description": "云函数目录绝对路径，目录名即函数名称；如 /path/to/function1"
+        },
+        "remote-npm-install": {
+          "type": "boolean",
+          "required": false,
+          "description": "是否远程安装 npm"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "cloud_fn_deploy"
+      }
+    },
+    {
+      "id": "cloud_fn_inc_deploy",
+      "name": "增量部署云函数",
+      "summary": "按云函数目录路径增量部署变更文件或目录到指定云环境，属于写操作；函数目录名即函数名称。",
+      "group": "cloud",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "cloudbase-operator"
+      ],
+      "inputSchema": {
+        "appid": {
+          "type": "string",
+          "required": true,
+          "description": "小程序 AppID"
+        },
+        "env": {
+          "type": "string",
+          "required": true,
+          "description": "云环境 ID"
+        },
+        "path": {
+          "type": "string",
+          "required": true,
+          "description": "云函数目录绝对路径，目录名即函数名称"
+        },
+        "file": {
+          "type": "string",
+          "required": true,
+          "description": "变更文件或目录路径，必须相对云函数所在的目录"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "cloud_fn_inc_deploy"
+      }
+    },
+    {
+      "id": "cloud_fn_info",
+      "name": "查询云函数信息",
+      "summary": "只读查询指定云函数的详情和状态",
+      "group": "cloud",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "cloudbase-operator"
+      ],
+      "inputSchema": {
+        "appid": {
+          "type": "string",
+          "required": false,
+          "description": "小程序 AppID；如 appid 和 project 都填写，优先使用 appid"
+        },
+        "project": {
+          "type": "string",
+          "required": false,
+          "description": "项目绝对路径；如 appid 未指定，会从项目路径下的 project.config.json 中获取 appid"
+        },
+        "env": {
+          "type": "string",
+          "required": true,
+          "description": "云环境 ID"
+        },
+        "names": {
+          "type": "string",
+          "required": true,
+          "description": "云函数名称（逗号分隔）"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "cloud_fn_info"
+      }
+    },
+    {
+      "id": "cloud_fn_list",
+      "name": "列出云函数",
+      "summary": "只读列出指定云环境中的云函数",
+      "group": "cloud",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "cloudbase-operator"
+      ],
+      "inputSchema": {
+        "appid": {
+          "type": "string",
+          "required": false,
+          "description": "小程序 AppID；如 appid 和 project 都填写，优先使用 appid"
+        },
+        "project": {
+          "type": "string",
+          "required": false,
+          "description": "项目绝对路径；如 appid 未指定，会从项目路径下的 project.config.json 中获取 appid"
+        },
+        "env": {
+          "type": "string",
+          "required": true,
+          "description": "云环境 ID"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "cloud_fn_list"
+      }
+    },
+    {
+      "id": "cloud_query_storage",
+      "name": "读取云存储",
+      "summary": "只读查询云存储文件列表、文件信息、临时下载链接或文本内容。",
+      "group": "cloud",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "cloudbase-operator"
+      ],
+      "inputSchema": {
+        "appid": {
+          "type": "string",
+          "required": true,
+          "description": "小程序 AppID"
+        },
+        "env": {
+          "type": "string",
+          "required": true,
+          "description": "云开发环境 ID，请先用 cloud_env_list 获取"
+        },
+        "action": {
+          "type": "string",
+          "required": true,
+          "description": "list | info | url | read"
+        },
+        "cloudPath": {
+          "type": "string",
+          "required": true,
+          "description": "云端文件路径，例如 files/data.txt 或 files/"
+        },
+        "maxAge": {
+          "type": "number",
+          "required": false,
+          "description": "临时链接有效期（秒），默认 3600"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "cloud_query_storage"
+      }
+    },
+    {
+      "id": "cloud_manage_storage",
+      "name": "修改云存储",
+      "summary": "管理云存储文件（上传/下载/删除）；upload/delete 属于写操作。",
+      "group": "cloud",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "cloudbase-operator"
+      ],
+      "inputSchema": {
+        "appid": {
+          "type": "string",
+          "required": true,
+          "description": "小程序 AppID"
+        },
+        "env": {
+          "type": "string",
+          "required": true,
+          "description": "云开发环境 ID，请先用 cloud_env_list 获取"
+        },
+        "action": {
+          "type": "string",
+          "required": true,
+          "description": "upload | download | delete"
+        },
+        "cloudPath": {
+          "type": "string",
+          "required": true,
+          "description": "云端文件路径，例如 files/data.txt"
+        },
+        "localPath": {
+          "type": "string",
+          "required": false,
+          "description": "本地文件路径，upload/download 时使用"
+        },
+        "isDirectory": {
+          "type": "boolean",
+          "required": false,
+          "description": "是否为目录操作"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "cloud_manage_storage"
+      }
+    },
+    {
+      "id": "cloud_query_msg_push",
+      "name": "查询消息推送",
+      "summary": "只读查询小程序云开发消息推送配置或合法事件约束。",
+      "group": "cloud",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "cloudbase-operator"
+      ],
+      "inputSchema": {
+        "appid": {
+          "type": "string",
+          "required": true,
+          "description": "小程序 AppID"
+        },
+        "env": {
+          "type": "string",
+          "required": false,
+          "description": "云开发环境 ID；list 时可选，用于仅返回该环境订阅"
+        },
+        "action": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "list",
+            "listSupportedEvents"
+          ],
+          "description": "list=当前推送配置；listSupportedEvents=全部合法消息类型/事件约束"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "cloud_query_msg_push"
+      }
+    },
+    {
+      "id": "cloud_manage_msg_push",
+      "name": "管理消息推送",
+      "summary": "管理小程序云开发消息推送配置（订阅/退订/启停/确保云函数模式），属于写操作。",
+      "group": "cloud",
+      "source": {
+        "type": "wechatide"
+      },
+      "scenes": [
+        "cloudbase-operator"
+      ],
+      "inputSchema": {
+        "appid": {
+          "type": "string",
+          "required": true,
+          "description": "小程序 AppID"
+        },
+        "env": {
+          "type": "string",
+          "required": true,
+          "description": "云开发环境 ID，请先用 cloud_env_list 获取"
+        },
+        "function_name": {
+          "type": "string",
+          "required": true,
+          "description": "接收消息推送的云函数名"
+        },
+        "action": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "subscribe",
+            "unsubscribe",
+            "setEnable",
+            "ensureCloudFunctionMode",
+            "ensureContainerMode",
+            "setContainerCallback"
+          ],
+          "description": "subscribe | unsubscribe | setEnable | ensureCloudFunctionMode | ensureContainerMode | setContainerCallback"
+        },
+        "msg_type": {
+          "type": "string",
+          "required": false,
+          "enum": [
+            "event",
+            "text",
+            "image",
+            "voice",
+            "video",
+            "miniprogrampage"
+          ],
+          "description": "消息类型，缺省 event；消息类型条目勿传 event_types"
+        },
+        "event_types": {
+          "type": "array",
+          "required": false,
+          "description": "事件列表（仅 msg_type=event）；subscribe 可缺省为虚拟支付 7 事件"
+        },
+        "enable": {
+          "type": "boolean",
+          "required": false,
+          "description": "setEnable 时：true 启用 / false 停用"
+        }
+      },
+      "execution": {
+        "transport": "skill_call",
+        "toolName": "cloud_manage_msg_push"
+      }
+    }
+  ]
+}
