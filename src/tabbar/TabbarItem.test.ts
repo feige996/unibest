@@ -15,7 +15,7 @@ const baseItem: CustomTabBarItem = {
   icon: 'i-carbon-home',
 }
 
-describe('TabbarItem', () => {
+describe('tabbarItem', () => {
   let wrapper: ReturnType<typeof mount>
 
   afterEach(() => {
