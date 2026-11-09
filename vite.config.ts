@@ -77,7 +77,9 @@ export default defineConfig(({ command, mode }) => {
     base: VITE_APP_PUBLIC_BASE,
     plugins: [
       // UniXXX 需要在 Uni 之前引入
-      UniLayouts(),
+      UniLayouts({
+        dts: 'src/types/uni-layouts.d.ts',
+      }),
       UniPlatform(),
       UniManifest(),
       UniComponents({
